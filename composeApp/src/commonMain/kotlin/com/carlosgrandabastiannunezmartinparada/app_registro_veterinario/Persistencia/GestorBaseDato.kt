@@ -1,0 +1,4 @@
+package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.Persistencia
+
+class GestorBaseDato {
+}
