@@ -1,4 +1,5 @@
-package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.Modelo
+package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.Modelo.Animales
+
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
