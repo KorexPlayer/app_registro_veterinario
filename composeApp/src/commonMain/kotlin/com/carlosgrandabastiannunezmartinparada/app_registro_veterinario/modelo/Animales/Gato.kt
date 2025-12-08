@@ -1,7 +1,5 @@
-package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.Modelo.Animales
+package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.Animales
 
-import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.Modelo.Animales.Mascota
-import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
 @kotlin.time.ExperimentalTime
@@ -11,10 +9,10 @@ class Gato (
     nombre: String,
     edad: Int,
     fechaNacimiento: Instant,
-    genero: String,
-    especie: String,
+    genero: Genero,
     raza: String,
-    peso: Double
+    peso: Double,
+    private val longitudBigotes: Float
 ): Mascota(
     id = id,
     idDueno = idDueno,
@@ -22,7 +20,6 @@ class Gato (
     edad = edad,
     fechaNacimiento = fechaNacimiento,
     genero = genero,
-    especie = especie,
     raza = raza,
     peso = peso
 ) {

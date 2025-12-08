@@ -1,20 +1,18 @@
-package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.Modelo.Animales
+package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.Animales
 
-import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.Modelo.Animales.Mascota
-import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
 @kotlin.time.ExperimentalTime
-class Conejo (
+class AveDomestica (
     id: Int,
     idDueno: Int,
     nombre: String,
     edad: Int,
     fechaNacimiento: Instant,
-    genero: String,
-    especie: String,
+    genero: Genero,
     raza: String,
-    peso: Double
+    peso: Double,
+    private val formaPico: String
 ): Mascota(
     id = id,
     idDueno = idDueno,
@@ -22,7 +20,6 @@ class Conejo (
     edad = edad,
     fechaNacimiento = fechaNacimiento,
     genero = genero,
-    especie = especie,
     raza = raza,
     peso = peso
 ) {

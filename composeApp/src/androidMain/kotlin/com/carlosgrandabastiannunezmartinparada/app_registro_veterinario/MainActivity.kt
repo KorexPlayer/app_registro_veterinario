@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-
+@kotlin.time.ExperimentalTime
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
+@kotlin.time.ExperimentalTime
 @Preview
 @Composable
 fun AppAndroidPreview() {

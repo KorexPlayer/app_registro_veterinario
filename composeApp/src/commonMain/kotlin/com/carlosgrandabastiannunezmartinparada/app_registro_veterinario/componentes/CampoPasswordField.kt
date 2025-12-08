@@ -22,7 +22,7 @@ fun CampoPasswordField(
     onChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ){
-    var (mostrar, setMostrar) = remember { mutableStateOf(false) }
+    val (mostrar, setMostrar) = remember { mutableStateOf(false) }
 
     OutlinedTextField(
         value = value,
@@ -32,10 +32,10 @@ fun CampoPasswordField(
         modifier = modifier.fillMaxWidth(),
         visualTransformation = if (mostrar) VisualTransformation.None else PasswordVisualTransformation(),
         trailingIcon = {
-                TextButton(onClick = { setMostrar(!mostrar) }){
-                    Text( if(mostrar)"Ocultar" else "Mostrar")
-                }
-        },
+            TextButton(onClick = { setMostrar(!mostrar) }){
+                Text( if(mostrar)"Ocultar" else "Mostrar")
+            }
+        }
     )
 
     Spacer(Modifier.height(8.dp))

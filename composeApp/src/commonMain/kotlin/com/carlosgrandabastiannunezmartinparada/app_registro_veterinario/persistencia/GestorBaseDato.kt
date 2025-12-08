@@ -1,8 +1,5 @@
-package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.Persistencia
+package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia
 
-import okio.FileSystem
-import okio.Path.Companion.toPath
-import okio.IOException
 class GestorBaseDato {
     fun getInstance(): GestorBaseDato {
         return GestorBaseDato()
