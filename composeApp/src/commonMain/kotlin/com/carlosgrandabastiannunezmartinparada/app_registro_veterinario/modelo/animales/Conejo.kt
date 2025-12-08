@@ -1,9 +1,9 @@
-package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.Animales
+package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.animales
 
 import kotlin.time.Instant
 
 @kotlin.time.ExperimentalTime
-class Gato (
+class Conejo (
     id: Int,
     idDueno: Int,
     nombre: String,
@@ -12,7 +12,7 @@ class Gato (
     genero: Genero,
     raza: String,
     peso: Double,
-    private val longitudBigotes: Float
+    private val tipoOrejas: String
 ): Mascota(
     id = id,
     idDueno = idDueno,

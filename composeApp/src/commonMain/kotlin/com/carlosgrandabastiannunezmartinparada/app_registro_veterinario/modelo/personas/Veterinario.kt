@@ -1,17 +1,19 @@
-package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.Personas
+package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.personas
 
-class Dueno (
+class Veterinario(
     id: Int,
     nombreCompleto: String,
     telefono: String,
     email: String,
     direccion: String,
-    private val rut: String
+    private val especialidad: String,
+    private val horarioAtencion: String,
+    private val descripcionServicio: String
 ): Persona(
     id = id,
     nombreCompleto = nombreCompleto,
     telefono = telefono,
     email = email,
     direccion = direccion
-){
+) {
 }

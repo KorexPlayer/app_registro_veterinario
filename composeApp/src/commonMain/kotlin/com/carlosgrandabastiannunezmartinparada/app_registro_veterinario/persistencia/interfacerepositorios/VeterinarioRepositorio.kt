@@ -1,7 +1,6 @@
 package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia.interfacerepositorios
 
-import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.Personas.Dueno
-import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.Personas.Veterinario
+import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.personas.Veterinario
 
 interface VeterinarioRepositorio {
     fun crearVeterinario (v: Veterinario): Veterinario

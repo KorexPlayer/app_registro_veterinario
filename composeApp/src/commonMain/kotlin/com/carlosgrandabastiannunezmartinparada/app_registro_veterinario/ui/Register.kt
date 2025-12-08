@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.dp
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.componentes.CampoPasswordField
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.componentes.CampoTextField
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.componentes.ComprobarDato
-import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.Personas.Dueno
-import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia.RepositorioVeterinaria
+import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.personas.Dueno
+import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia.RepositorioDueno
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import kotlin.random.Random
 
@@ -65,7 +65,7 @@ fun RegisterPage(
                 val id = Random.nextInt(99999)
                 // funcion de si existe en la base de datos
                 val nuevodueno = Dueno(id = id, nombreCompleto = nombre, telefono = telefono, email = email, direccion = direccion, rut = rut)
-                RepositorioVeterinaria.registrarDueno(nuevodueno)
+                RepositorioDueno.crearDueno(nuevodueno)
 
                 onLogin
             }

@@ -1,4 +1,4 @@
-package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.Personas
+package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.personas
 
 abstract class Persona(
     private val id: Int,

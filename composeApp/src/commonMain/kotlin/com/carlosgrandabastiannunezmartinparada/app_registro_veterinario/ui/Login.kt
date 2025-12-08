@@ -22,7 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.componentes.CampoPasswordField
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.componentes.CampoTextField
-import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia.RepositorioVeterinaria
+import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia.RepositorioDueno
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @kotlin.time.ExperimentalTime
@@ -55,7 +55,7 @@ fun LoginPage(
                 Spacer(modifier = Modifier.height(8.dp))
             }
             Button(onClick = {onLoginSuccess()
-                /*val duenio = RepositorioVeterinaria.autenticarUsuario(rut, password)
+                val duenio = RepositorioDueno.autenticarUsuario(rut, password)
 
                 if (duenio != null){
                     error = null
@@ -66,7 +66,7 @@ fun LoginPage(
                 }
                 else {
                     error = "RUT o Password incorrectos"
-                }*/
+                }
             }) { Text(text = "Iniciar Sesion") }
             TextButton(onClick =
                 onRegister

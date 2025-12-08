@@ -1,9 +1,9 @@
-package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.Animales
+package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.animales
 
 import kotlin.time.Instant
 
 @kotlin.time.ExperimentalTime
-class Hamster (
+class Gato (
     id: Int,
     idDueno: Int,
     nombre: String,
@@ -12,7 +12,7 @@ class Hamster (
     genero: Genero,
     raza: String,
     peso: Double,
-    private val capacidadAbazonesGramos: Float
+    private val longitudBigotes: Float
 ): Mascota(
     id = id,
     idDueno = idDueno,

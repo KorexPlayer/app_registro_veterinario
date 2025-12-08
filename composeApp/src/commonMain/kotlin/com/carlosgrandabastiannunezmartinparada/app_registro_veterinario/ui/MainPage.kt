@@ -30,7 +30,7 @@ fun MainPage(
     onCerrarSesion: () -> Unit
 ) {
     var selected by remember { mutableStateOf(2) }
-    val options = listOf("Historial Medico", "Vacunas", "Principal", "Controles", "Veterinarios", )
+    val options = listOf("Hist. Medico", "Vacunas", "Principal", "Controles", "Veterinarios", )
     MaterialTheme {
         Surface {
 

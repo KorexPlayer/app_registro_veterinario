@@ -1,4 +1,4 @@
-package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.Animales
+package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.animales
 
 import kotlin.time.Instant
 

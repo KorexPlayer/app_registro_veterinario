@@ -1,6 +1,6 @@
 package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia
 
-import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.Personas.Veterinario
+import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.personas.Veterinario
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia.interfacerepositorios.VeterinarioRepositorio
 
 object RepositorioVeterinarios : VeterinarioRepositorio{

@@ -1,6 +1,6 @@
 package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia.interfacerepositorios
 
-import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.Animales.Mascota
+import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.animales.Mascota
 
 @kotlin.time.ExperimentalTime
 interface AnimalRepositorio {
