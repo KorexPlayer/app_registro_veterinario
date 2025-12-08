@@ -13,4 +13,14 @@ class ControlVeterinario (
     private val CantidadExamen : Int,
     private val nombreExamenes : List<String>
 ) {
+    //Getter
+    fun getId() = id
+    fun getIdMascota() = idMascota
+    fun getIdVeterinario() = idVeterinario
+    fun getFechaConsulta() = fechaConsulta
+    fun getMotivoControl() = motivoControl
+    fun getRecomendaciones() = recomendaciones
+    fun getNecesidadExamen() = necesidadExamen
+    fun getCantidadExamen() = CantidadExamen
+    fun getNombreExamenes() = nombreExamenes
 }

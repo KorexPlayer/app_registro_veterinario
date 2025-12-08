@@ -13,4 +13,13 @@ class RegistroVacuna (
     private val fechaVacunacion : Instant,
     private val observaciones : String
 ) {
+    //Getter
+    fun getId() = id
+    fun getIdMascota() = idMascota
+    fun getIdVeterinario() = idVeterinario
+    fun getNombreVacuna() = nombreVacuna
+    fun getTipo() = tipo
+    fun getCantidadDosis() = cantidadDosis
+    fun getFechaVacunacion() = fechaVacunacion
+    fun getObservaciones() = observaciones
 }

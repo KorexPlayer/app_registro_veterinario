@@ -71,8 +71,8 @@ object RepositorioAnimal : AnimalRepositorio {
         val nombre = parts[3]
         val edad = parts[4].toInt()
 
-        val fecha = try { Instant.parse(parts[5]) } catch (e: Exception) { return null }
-        val genero = try { Genero.valueOf(parts[6]) } catch (e: Exception) { Genero.MACHO }
+        val fecha = try { Instant.parse(parts[5]) } catch (_: Exception) { return null }
+        val genero = try { Genero.valueOf(parts[6]) } catch (_: Exception) { Genero.MACHO }
 
         val raza = parts[7]
         val peso = parts[8].toDouble()

@@ -9,5 +9,11 @@ class Tratamiento(
     private val Medicamentos: List<List<String>>, // [nombre, dosis, frecuencia, duracion]
     private val observaciones : String
 ) {
-
+    //Getter
+    fun getId() = id
+    fun getIdMascota() = idMascota
+    fun getIdVeterinario() = idVeterinario
+    fun getNombreTratamiento() = nombreTratamiento
+    fun getRazonTratamiento() = razonTratamiento
+    fun getObservaciones() = observaciones
 }

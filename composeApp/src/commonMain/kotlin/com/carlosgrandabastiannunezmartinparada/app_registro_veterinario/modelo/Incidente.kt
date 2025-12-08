@@ -13,4 +13,14 @@ class Incidente (
     private val gravedad: String,
     private val observaciones: String
 ) {
+    //Getter
+    fun getId() = id
+    fun getIdMascota() = idMascota
+    fun getIdVeterinario() = idVeterinario
+    fun getNombre() = nombre
+    fun getFecha() = fecha
+    fun getTipoIncidente() = tipoIncidente
+    fun getDescripcion() = descripcion
+    fun getGravedad() = gravedad
+    fun getObservaciones() = observaciones
 }
