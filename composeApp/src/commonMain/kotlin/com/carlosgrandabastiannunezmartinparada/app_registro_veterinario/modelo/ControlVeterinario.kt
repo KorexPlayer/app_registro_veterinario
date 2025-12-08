@@ -4,6 +4,8 @@ import kotlin.time.Instant
 @kotlin.time.ExperimentalTime
 class ControlVeterinario (
     private val id: Int,
+    private val idMascota: Int,
+    private val idVeterinario: Int,
     private val fechaConsulta : Instant,
     private val motivoControl : String,
     private val recomendaciones : String,

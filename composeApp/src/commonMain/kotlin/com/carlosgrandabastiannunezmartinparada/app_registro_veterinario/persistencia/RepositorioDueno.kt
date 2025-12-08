@@ -6,6 +6,18 @@ import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persist
 
 @kotlin.time.ExperimentalTime
 object RepositorioDueno : DuenoRepositorio {
+
+    val repositorio: MutableList<Dueno> = mutableListOf()
+
+    private var persistencia: GestorBaseDato? = null
+
+    private const val PREFIJO_KEY = "Dueno_"
+    private const val DELIMITADOR = "::"
+
+    fun init(persistencia: GestorBaseDato) {
+        this.persistencia = persistencia
+
+    }
     override fun crearDueno(d: Dueno): Dueno {
         TODO("Not yet implemented")
     }

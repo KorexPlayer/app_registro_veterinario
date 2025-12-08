@@ -4,6 +4,8 @@ import kotlin.time.Instant
 @kotlin.time.ExperimentalTime
 class Incidente (
     private val id: Int,
+    private val idMascota: Int,
+    private val idVeterinario: Int,
     private val nombre: String,
     private val fecha: Instant,
     private val tipoIncidente: String,
