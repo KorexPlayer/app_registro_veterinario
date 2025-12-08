@@ -7,7 +7,7 @@ import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.
 interface DuenoRepositorio {
     fun crearDueno (d: Dueno): Dueno
     fun actualizarDueno (d: Dueno): Dueno
-    fun eliminarDueno (id: Int): Boolean
+    fun eliminarDueno (rut: String): Boolean
     fun obtenerMascotasDueno(idDueno: Int): List<Mascota>
     fun obtenerPorRut(rut: String): Dueno?
 }

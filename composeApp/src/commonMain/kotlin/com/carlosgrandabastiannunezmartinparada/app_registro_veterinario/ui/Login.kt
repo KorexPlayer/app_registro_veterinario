@@ -54,9 +54,8 @@ fun LoginPage(
 
                 Spacer(modifier = Modifier.height(8.dp))
             }
-            Button(onClick = {onLoginSuccess()
+            Button(onClick = {
                 val duenio = RepositorioDueno.autenticarUsuario(rut, password)
-
                 if (duenio != null){
                     error = null
                     onLoginSuccess()

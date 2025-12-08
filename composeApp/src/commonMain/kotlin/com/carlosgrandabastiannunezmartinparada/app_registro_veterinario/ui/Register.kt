@@ -63,11 +63,15 @@ fun RegisterPage(
             else {
                 error = null
                 val id = Random.nextInt(99999)
-                // funcion de si existe en la base de datos
-                val nuevodueno = Dueno(id = id, nombreCompleto = nombre, telefono = telefono, email = email, direccion = direccion, rut = rut)
-                RepositorioDueno.crearDueno(nuevodueno)
+                if(RepositorioDueno.obtenerPorRut(rut) == null) {
+                    val nuevodueno = Dueno(id = id, nombreCompleto = nombre, telefono = telefono, email = email, direccion = direccion, rut = rut, contrasena = password)
+                    RepositorioDueno.crearDueno(nuevodueno)
+                    onLogin()
+                }
+                else {
+                    error = "Ya existe el usuario"
+                }
 
-                onLogin
             }
         }) {
             Text("Registrarse")

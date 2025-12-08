@@ -52,23 +52,62 @@ object RepositorioDueno : DuenoRepositorio {
         val contasena = parts.getOrNull(5)
         val id = parts.getOrNull(6)!!.toInt()
 
-        if (rut == null || nombre == null || email == null || direccion == null || telefono == null || contasena == null || id == null) {
+        if (rut == null || nombre == null || email == null || direccion == null || telefono == null || contasena == null) {
             return null
         }
         return Dueno(rut = rut, id = id, nombreCompleto = nombre, email = email, direccion = direccion, telefono = telefono, contrasena = contasena)
     }
     override fun crearDueno(d: Dueno): Dueno {
-        for (cliente in repositorio) {
-            if ()
+        for (dueno in repositorio) {
+            if (dueno.getRut() == d.getRut()) {
+                println("Ya existe Dueño en la base de datos")
+                return dueno
+            }
         }
+        repositorio.add(d)
+        println("Dueno creado correctamente.")
+
+        persistencia?.let { p ->
+            val key = "$PREFIJO_KEY${d.getRut()}"
+            val data = duenoATexto(d).encodeToByteArray()
+            p.save(key, data)
+        }
+        return d
     }
 
     override fun actualizarDueno(d: Dueno): Dueno {
-        TODO("Not yet implemented")
+        for (i in repositorio.indices) {
+            if (repositorio[i].getRut() == d.getRut()) {
+                repositorio[i] = d
+                println("Dueno actualizado correctamente")
+
+                persistencia?.let { p ->
+                    val key = "$PREFIJO_KEY${d.getRut()}"
+                    val data = duenoATexto(d).encodeToByteArray()
+                    p.save(key, data)
+                }
+                return d
+            }
+        }
+        println("No se encontro el dueno")
+        return d
     }
 
-    override fun eliminarDueno(id: Int): Boolean {
-        TODO("Not yet implemented")
+    override fun eliminarDueno(rut: String): Boolean {
+        for (dueno in repositorio) {
+            if (dueno.getRut() == rut) {
+                repositorio.remove(dueno)
+                println("Se ha eliminado el Dueno del repositorio.")
+
+                persistencia?.let { p ->
+                    val key = "$PREFIJO_KEY$rut"
+                    p.delete(key)
+                }
+
+                return true
+            }
+        }
+        return false
     }
 
     override fun obtenerMascotasDueno(idDueno: Int): List<Mascota> {
@@ -76,9 +115,22 @@ object RepositorioDueno : DuenoRepositorio {
     }
 
     override fun obtenerPorRut(rut: String): Dueno? {
-        TODO("Not yet implemented")
+        for (dueno in repositorio) {
+            if (dueno.getRut() == rut) {
+                println("Dueno encontrado: ${dueno.getNombre()}")
+                return dueno
+            }
+        }
+        println("No se encontro el Dueno")
+        return null
     }
     fun autenticarUsuario(rut: String, password: String): Dueno? {
+        val usuario = obtenerPorRut(rut)
+                if (usuario != null) {
+                    if (usuario!!.getRut() == rut && usuario!!.getContrasena() == password) {
+                        return usuario
+                    }
+                }
         return null
     }
 }

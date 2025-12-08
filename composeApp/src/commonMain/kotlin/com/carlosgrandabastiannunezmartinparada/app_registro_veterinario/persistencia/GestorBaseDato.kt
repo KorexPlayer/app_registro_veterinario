@@ -1,5 +1,7 @@
 package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia
 
+import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia.interfacerepositorios.StorageDriver
+
 class GestorBaseDato(
     private val driver: StorageDriver
 ) {
