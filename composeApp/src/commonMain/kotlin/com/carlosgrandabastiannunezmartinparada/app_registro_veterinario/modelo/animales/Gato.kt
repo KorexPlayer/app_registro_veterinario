@@ -23,4 +23,6 @@ class Gato (
     raza = raza,
     peso = peso
 ) {
+    //Getter
+    fun getLongitudBigotes() = longitudBigotes
 }

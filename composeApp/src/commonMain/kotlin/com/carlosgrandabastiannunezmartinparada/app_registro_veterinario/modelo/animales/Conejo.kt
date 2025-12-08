@@ -23,4 +23,6 @@ class Conejo (
     raza = raza,
     peso = peso
 ) {
+    //Getter
+    fun getTipoOrejas() = tipoOrejas
 }

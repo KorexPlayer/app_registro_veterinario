@@ -23,4 +23,6 @@ class Perro (
     raza = raza,
     peso = peso
 ) {
+    //Getter
+    fun getTipoHocico() = tipoHocico
 }

@@ -13,4 +13,13 @@ abstract class Mascota (
     private val peso: Double
 
 ) {
+    //Getter
+    fun getId() = id
+    fun getIdDueno() = idDueno
+    fun getNombre() = nombre
+    fun getEdad() = edad
+    fun getFechaNacimiento() = fechaNacimiento
+    fun getGenero() = genero
+    fun getRaza() = raza
+    fun getPeso() = peso
 }

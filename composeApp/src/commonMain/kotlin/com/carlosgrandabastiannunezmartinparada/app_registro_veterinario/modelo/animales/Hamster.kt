@@ -23,4 +23,6 @@ class Hamster (
     raza = raza,
     peso = peso
 ) {
+    //Getter
+    fun getCapacidadAbazonesGramos() = capacidadAbazonesGramos
 }

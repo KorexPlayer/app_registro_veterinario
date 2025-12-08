@@ -23,4 +23,6 @@ class AveDomestica (
     raza = raza,
     peso = peso
 ) {
+    //Getter
+    fun getFormaPico() = formaPico
 }
