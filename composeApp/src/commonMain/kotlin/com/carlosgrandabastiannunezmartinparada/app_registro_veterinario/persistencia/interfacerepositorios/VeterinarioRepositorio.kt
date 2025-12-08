@@ -7,4 +7,6 @@ interface VeterinarioRepositorio {
     fun actualizarVeterinario (v: Veterinario): Veterinario
     fun eliminarVeterinario (id: Int): Boolean
     fun obtenerPorId(id: Int): Veterinario?
+
+    fun listar(): List<Veterinario>
 }

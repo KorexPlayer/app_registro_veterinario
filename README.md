@@ -5,6 +5,7 @@
 ## Que hay que revisar
 
  - AndroidDriverStorage
+ - Arreglar Boton de Tema Oscuro
  - 
 
 # APP Registro Veterinario

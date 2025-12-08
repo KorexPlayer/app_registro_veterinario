@@ -33,7 +33,6 @@ fun MainPage(
     val options = listOf("Hist. Medico", "Vacunas", "Principal", "Controles", "Veterinarios", )
     MaterialTheme {
         Surface {
-
             Column(modifier = Modifier.fillMaxSize()) {
                 Box {
                     Row(horizontalArrangement = Arrangement.End, verticalAlignment = Alignment.CenterVertically) {
@@ -58,7 +57,7 @@ fun MainPage(
                     }
 
                     4 -> {
-                        // Contactos de los veterinarios visitados
+                        VeterinariosVisitados()
                     }
                 }
                 Spacer(modifier = Modifier.height(8.dp))
@@ -71,11 +70,11 @@ fun MainPage(
                             ), onClick = { selected = index },
                             selected = index == selected,
                             label = { Text(option) }
-                        )
+                            )
+                        }
                     }
                 }
             }
         }
-    }
     }
 }

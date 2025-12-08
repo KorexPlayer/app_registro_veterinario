@@ -131,4 +131,12 @@ object RepositorioVeterinarios : VeterinarioRepositorio{
         println("No se encontro el Veterinario")
         return null
     }
+
+    override fun listar(): List<Veterinario> {
+        val lista: MutableList<Veterinario> = mutableListOf()
+        for (veterinario in repositorio) {
+                lista.add(veterinario)
+        }
+        return lista
+    }
 }
