@@ -6,7 +6,8 @@ class Dueno (
     telefono: String,
     email: String,
     direccion: String,
-    private val rut: String
+    private val rut: String,
+    private val contrasena: String
 ): Persona(
     id = id,
     nombreCompleto = nombreCompleto,
@@ -14,4 +15,8 @@ class Dueno (
     email = email,
     direccion = direccion
 ){
+    //Getter
+    fun getRut() = rut
+    fun getContrasena() = contrasena
+
 }

@@ -7,4 +7,10 @@ abstract class Persona(
     private val email: String,
     private val direccion: String
     ){
+    //Getter
+    open fun getId() = id
+    open fun getNombre(): String = nombreCompleto
+    open fun getTelefono(): String = telefono
+    open fun getEmail(): String = email
+    open fun getDireccion(): String = direccion
 }

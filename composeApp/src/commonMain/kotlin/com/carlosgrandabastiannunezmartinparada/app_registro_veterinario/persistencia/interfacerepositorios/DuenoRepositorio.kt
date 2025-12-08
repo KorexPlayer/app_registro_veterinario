@@ -9,4 +9,5 @@ interface DuenoRepositorio {
     fun actualizarDueno (d: Dueno): Dueno
     fun eliminarDueno (id: Int): Boolean
     fun obtenerMascotasDueno(idDueno: Int): List<Mascota>
+    fun obtenerPorRut(rut: String): Dueno?
 }
