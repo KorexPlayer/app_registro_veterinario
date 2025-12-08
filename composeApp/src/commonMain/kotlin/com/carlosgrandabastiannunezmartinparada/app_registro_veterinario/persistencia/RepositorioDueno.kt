@@ -2,11 +2,12 @@ package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persis
 
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.animales.Mascota
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.personas.Dueno
+import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia.interfacerepositorios.AnimalRepositorio
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia.interfacerepositorios.DuenoRepositorio
 
 @kotlin.time.ExperimentalTime
 object RepositorioDueno : DuenoRepositorio {
-
+    private var animalRepo: AnimalRepositorio? = null
     val repositorio: MutableList<Dueno> = mutableListOf()
 
     private var persistencia: GestorBaseDato? = null
@@ -14,8 +15,9 @@ object RepositorioDueno : DuenoRepositorio {
     private const val PREFIJO_KEY = "Dueno_"
     private const val DELIMITADOR = "::"
 
-    fun init(persistencia: GestorBaseDato) {
+    fun init(persistencia: GestorBaseDato, animalRepo: AnimalRepositorio) {
         this.persistencia = persistencia
+        this.animalRepo = animalRepo
         cargarDatos()
     }
 
@@ -126,11 +128,11 @@ object RepositorioDueno : DuenoRepositorio {
     }
     fun autenticarUsuario(rut: String, password: String): Dueno? {
         val usuario = obtenerPorRut(rut)
-                if (usuario != null) {
-                    if (usuario!!.getRut() == rut && usuario!!.getContrasena() == password) {
-                        return usuario
-                    }
-                }
+        if (usuario != null) {
+            if (usuario!!.getRut() == rut && usuario!!.getContrasena() == password) {
+                return usuario
+            }
+        }
         return null
     }
 }

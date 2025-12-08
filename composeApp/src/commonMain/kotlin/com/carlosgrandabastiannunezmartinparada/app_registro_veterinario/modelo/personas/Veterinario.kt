@@ -16,4 +16,8 @@ class Veterinario(
     email = email,
     direccion = direccion
 ) {
+    //Getter
+    fun getEspecialidad(): String = especialidad
+    fun getHorarioAtencion(): String = horarioAtencion
+    fun getDescripcionServicio(): String = descripcionServicio
 }
