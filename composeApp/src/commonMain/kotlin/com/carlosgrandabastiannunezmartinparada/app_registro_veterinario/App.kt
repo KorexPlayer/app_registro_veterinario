@@ -34,6 +34,7 @@ private enum class Pantallas { LOGIN, REGISTRO, MAIN}
 @Preview
 fun App() {
     var checked by remember { mutableStateOf(true) }
+    var usuario by remember { mutableStateOf("") }
     MaterialTheme(colorScheme  = if(checked) {
         darkScheme
     } else {

@@ -23,7 +23,7 @@ fun VeterinariosVisitados() {
             ExpandableMediaCard(
                 item = sampleItem,
                 onDeleteClick = {
-                    //RepositorioVeterinarios.eliminarVeterinario(veterinarios.getId())
+                    RepositorioVeterinarios.eliminarVeterinario(veterinarios.getId())
                     // Lógica para borrar el item
                     println("Borrar item")
                 }

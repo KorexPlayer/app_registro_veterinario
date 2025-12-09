@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
+@kotlin.time.ExperimentalTime
 @Composable
 @Preview
 fun MainPage(
@@ -32,8 +33,20 @@ fun MainPage(
     var selected by remember { mutableStateOf(2) }
     val options = listOf("Hist. Medico", "Vacunas", "Principal", "Controles", "Veterinarios", )
     MaterialTheme {
-        Surface {
-            Column(modifier = Modifier.fillMaxSize()) {
+        Column {
+            Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                Box { SingleChoiceSegmentedButtonRow {
+                    options.forEachIndexed { index, option ->
+                        SegmentedButton(
+                            shape = SegmentedButtonDefaults.itemShape(
+                                index = index,
+                                count = options.size
+                            ), onClick = { selected = index },
+                            selected = index == selected,
+                            label = { Text(option) }
+                        )
+                    }
+                }
                 Box {
                     Row(horizontalArrangement = Arrangement.End, verticalAlignment = Alignment.CenterVertically) {
                         Button(onClick =  {onCerrarSesion()} ) {Text(text = "Cerrar Sesion") }
@@ -49,7 +62,7 @@ fun MainPage(
                     }
 
                     2 -> {
-                        //Datos de Mascotas y seleccion de mascota a ver
+                        PaginaResumen()
                     }
 
                     3 -> {
@@ -61,20 +74,9 @@ fun MainPage(
                     }
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-                Box { SingleChoiceSegmentedButtonRow {
-                    options.forEachIndexed { index, option ->
-                        SegmentedButton(
-                            shape = SegmentedButtonDefaults.itemShape(
-                                index = index,
-                                count = options.size
-                            ), onClick = { selected = index },
-                            selected = index == selected,
-                            label = { Text(option) }
-                            )
-                        }
-                    }
-                }
+
             }
         }
+    }
     }
 }

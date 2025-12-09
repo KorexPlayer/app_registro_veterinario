@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.componentes.CampoPasswordField
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.componentes.CampoTextField
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia.RepositorioDueno
+import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia.UsuarioActual
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @kotlin.time.ExperimentalTime
@@ -58,6 +59,8 @@ fun LoginPage(
                 val duenio = RepositorioDueno.autenticarUsuario(rut, password)
                 if (duenio != null){
                     error = null
+                    UsuarioActual.usuarioActual = rut
+                    UsuarioActual.nombreActual = duenio.getNombre()
                     onLoginSuccess()
                 }
                 else if (rut.isEmpty() || password.isEmpty()){

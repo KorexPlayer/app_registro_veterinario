@@ -26,7 +26,6 @@ class MainActivity : ComponentActivity() {
         RepositorioVeterinarios.init(persistencia)
         RepositorioDueno.init(persistencia, RepositorioAnimal)
         setContent {
-
             App()
         }
     }
