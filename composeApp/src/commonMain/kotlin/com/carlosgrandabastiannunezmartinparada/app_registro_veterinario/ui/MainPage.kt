@@ -1,27 +1,19 @@
-package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.ui
-
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Archive
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia.UsuarioActual
+import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.ui.PaginaResumen
+import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.ui.VeterinariosVisitados
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @kotlin.time.ExperimentalTime
@@ -30,53 +22,63 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun MainPage(
     onCerrarSesion: () -> Unit
 ) {
-    var selected by remember { mutableStateOf(2) }
-    val options = listOf("Hist. Medico", "Vacunas", "Principal", "Controles", "Veterinarios", )
-    MaterialTheme {
-        Column {
-            Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                Box { SingleChoiceSegmentedButtonRow {
-                    options.forEachIndexed { index, option ->
-                        SegmentedButton(
-                            shape = SegmentedButtonDefaults.itemShape(
-                                index = index,
-                                count = options.size
-                            ), onClick = { selected = index },
-                            selected = index == selected,
-                            label = { Text(option) }
-                        )
-                    }
+    // Estado para saber qué pestaña está seleccionada
+    var selectedItem by remember { mutableStateOf(0) }
+
+    // Lista de opciones para la barra inferior (Iconos y Textos)
+    val items = listOf("Principal", "Controles", "Medico Vet.", "Historial", "Vacunas")
+    val icons = listOf(Icons.Default.Home, Icons.Default.List, Icons.Default.Person, Icons.Default.List, Icons.Default.Archive)
+
+    Scaffold(
+        // 1. Barra Inferior (Navigation Bar) fija al fondo
+        bottomBar = {
+            NavigationBar {
+                items.forEachIndexed { index, item ->
+                    NavigationBarItem(
+                        icon = { Icon(icons[index], contentDescription = item) },
+                        label = { Text(item) },
+                        selected = selectedItem == index,
+                        onClick = { selectedItem = index }
+                    )
                 }
-                Box {
-                    Row(horizontalArrangement = Arrangement.End, verticalAlignment = Alignment.CenterVertically) {
-                        Button(onClick =  {onCerrarSesion()} ) {Text(text = "Cerrar Sesion") }
-                    }
-                    Spacer(Modifier.height(30.dp)) }
-                when (selected) {
-                    0 -> {
-                        //Historial Medico
-                    }
-
-                    1 -> {
-                        //Vacunas que ha tenido
-                    }
-
-                    2 -> {
-                        PaginaResumen()
-                    }
-
-                    3 -> {
-                        //Controles Veterinarios y sus tratamientos
-                    }
-
-                    4 -> {
-                        VeterinariosVisitados()
-                    }
-                }
-                Spacer(modifier = Modifier.height(8.dp))
-
             }
         }
-    }
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+                .padding(16.dp), // Margen general
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                Button(
+                    onClick = { onCerrarSesion() },
+                    shape = MaterialTheme.shapes.medium
+                ) {
+                    Text("Cerrar Sesion")
+                }
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+            // Area de contenido cambiante (Ocupa el espacio disponible)
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                when (selectedItem) {
+                    0 -> PaginaResumen()
+                    1 -> Text("Controles Veterinarios")
+                    2 -> VeterinariosVisitados()
+                    3 -> Text("Historial Médico")
+                    4 -> Text("Vacunas")
+                }
+            }
+        }
     }
 }

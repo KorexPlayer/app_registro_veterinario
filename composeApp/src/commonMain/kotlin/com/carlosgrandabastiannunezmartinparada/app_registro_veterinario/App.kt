@@ -1,5 +1,6 @@
 package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario
 
+import MainPage
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -25,7 +26,6 @@ import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.compone
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.componentes.lightScheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.ui.LoginPage
-import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.ui.MainPage
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.ui.RegisterPage
 private enum class Pantallas { LOGIN, REGISTRO, MAIN}
 
@@ -34,7 +34,6 @@ private enum class Pantallas { LOGIN, REGISTRO, MAIN}
 @Preview
 fun App() {
     var checked by remember { mutableStateOf(true) }
-    var usuario by remember { mutableStateOf("") }
     MaterialTheme(colorScheme  = if(checked) {
         darkScheme
     } else {
@@ -43,9 +42,9 @@ fun App() {
             var pantalla by remember { mutableStateOf(Pantallas.LOGIN) }
             Surface(modifier = Modifier.fillMaxSize()) {
                 Box (modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    Row(modifier = Modifier.width(200.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
+                   Row(modifier = Modifier.width(200.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
                         Text("TemaOscuro: ",modifier = Modifier.weight(1f), textAlign = TextAlign.Right)
-                        Switch(checked = checked, onCheckedChange = { checked = it }, modifier = Modifier.weight(1f))
+                       Switch(checked = checked, onCheckedChange = { checked = it }, modifier = Modifier.weight(1f))
                     }
                     Spacer(Modifier.height(12.dp))
                 }
