@@ -53,7 +53,7 @@ fun VeterinariosVisitados() {
                     title = veterinarios.getNombre(),
                     type = veterinarios.getEspecialidad(),
                     veterinarios.getHorarioAtencion(),
-                    veterinarios.getDescripcionServicio() + "Numero Telfonico: ${veterinarios.getTelefono()} y Correo Electronico: ${veterinarios.getEmail()}, Nos pueden encontrar en: ${veterinarios.getDireccion()}")
+                    veterinarios.getDescripcionServicio() + "Numero Telefonico: ${veterinarios.getTelefono()} y Correo Electronico: ${veterinarios.getEmail()}, Nos pueden encontrar en: ${veterinarios.getDireccion()}")
                 ExpandableMediaCard(
                     item = sampleItem,
                     onDeleteClick = { RepositorioVeterinarios.eliminarVeterinario(veterinarios.getId())},
