@@ -1,5 +1,6 @@
 package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia
 
+import androidx.compose.runtime.mutableStateListOf
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.animales.Mascota
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.animales.Perro
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.animales.Gato
@@ -13,7 +14,7 @@ import kotlin.time.Instant
 @kotlin.time.ExperimentalTime
 object RepositorioAnimal : AnimalRepositorio {
 
-    val repositorio: MutableList<Mascota> = mutableListOf()
+    val repositorio: MutableList<Mascota> = mutableStateListOf()
 
     private var persistencia: GestorBaseDato? = null
 

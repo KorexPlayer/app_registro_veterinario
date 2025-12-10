@@ -18,7 +18,7 @@ fun ComprobarDato(dato: String, tipo: String): Boolean {
             }
         }
         "onlynum" -> {
-            if (dato.any { it.isLetter() && it != '.' }) {
+            if (dato.any { it.isLetter()}) {
                 return false
             }
         }

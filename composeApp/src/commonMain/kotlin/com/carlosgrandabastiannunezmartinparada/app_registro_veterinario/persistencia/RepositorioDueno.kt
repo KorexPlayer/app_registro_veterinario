@@ -1,5 +1,6 @@
 package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia
 
+import androidx.compose.runtime.mutableStateListOf
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.animales.Mascota
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.personas.Dueno
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia.interfacerepositorios.AnimalRepositorio
@@ -8,7 +9,7 @@ import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persist
 @kotlin.time.ExperimentalTime
 object RepositorioDueno : DuenoRepositorio {
     private var animalRepo: AnimalRepositorio? = null
-    val repositorio: MutableList<Dueno> = mutableListOf()
+    val repositorio: MutableList<Dueno> = mutableStateListOf()
 
     private var persistencia: GestorBaseDato? = null
 

@@ -143,10 +143,10 @@ private fun AgregarMascota(onCancelar: () -> Unit, onRegistroExitoso: () -> Unit
                 CampoTextField("Tipo de Oreja", especialstr, onChange = { especialstr = it })
             }
             "Gato" -> {
-                CampoTextField("Longitud de Bigotes", especialstr, onChange = { especialnum = it.toDouble() })
+                CampoTextField("Longitud de Bigotes", especialstr, onChange = { especialstr = it })
             }
             "Hamster" -> {
-                CampoTextField("Capacidad Abazones (grs)", especialstr, onChange = { especialnum = it.toDouble() })
+                CampoTextField("Capacidad Abazones (grs)", especialstr, onChange = { especialstr = it })
             }
             "Perro" -> {
                 CampoTextField("Tipo de Hocico", especialstr, onChange = { especialstr = it })
@@ -160,11 +160,7 @@ private fun AgregarMascota(onCancelar: () -> Unit, onRegistroExitoso: () -> Unit
             try {
                 if (nombre.isEmpty() || edad.isEmpty() || fechaNacimiento.isEmpty() || peso.isEmpty() || raza.isEmpty() || especialstr.isEmpty()) {
                     error = "Rellene todos los campos"
-                } else if (!(ComprobarDato(nombre, "nonum") xor !(ComprobarDato(edad, "onlynum") xor !(ComprobarDato(
-                        peso,
-                        "onlynum"
-                    ) xor !(ComprobarDato(especialnum.toString(), "onlynum")))))
-                ) {
+                } else if (!(ComprobarDato(nombre, "nonum") xor (!(ComprobarDato(edad, "onlynum") or !(ComprobarDato(peso, "onlynum")))))) {
                     error = "El nombre solo letras o Solo rellene con lo solicitado"
                 } else {
                     error = null
@@ -255,7 +251,13 @@ private fun AgregarMascota(onCancelar: () -> Unit, onRegistroExitoso: () -> Unit
                 }
             }
             catch (e: Exception) {
-                error = e.toString()
+                if (e.toString().contains("java.lang.NumberFormatException")) {
+                    error = "Colocaste letras donden no debias"
+                }
+                else {
+                    error = e.toString()
+                }
+
             }
         }
             ) {

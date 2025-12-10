@@ -2,6 +2,8 @@ package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,18 +17,15 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Preview
 fun VeterinariosVisitados() {
     Column(
-        modifier = Modifier// Fondo blanco de la pantalla
+        modifier = Modifier
             .padding(top = 20.dp)
     ) {
+        Text("Contactos de los Veterinarios", style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(5.dp))
         for (veterinarios in RepositorioVeterinarios.listar()) {
             val sampleItem = CardItem(title = veterinarios.getNombre(), type = veterinarios.getEspecialidad(), veterinarios.getHorarioAtencion(), veterinarios.getDescripcionServicio() + "Numero Telfonico: ${veterinarios.getTelefono()} y Correo Electronico: ${veterinarios.getEmail()}, Nos pueden encontrar en: ${veterinarios.getDireccion()}")
             ExpandableMediaCard(
                 item = sampleItem,
-                onDeleteClick = {
-                    RepositorioVeterinarios.eliminarVeterinario(veterinarios.getId())
-                    // Lógica para borrar el item
-                    println("Borrar item")
-                }
+                onDeleteClick = {}
             )
             Spacer(modifier = Modifier.height(12.dp))
         }

@@ -1,11 +1,12 @@
 package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia
 
+import androidx.compose.runtime.mutableStateListOf
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.personas.Veterinario
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia.interfacerepositorios.VeterinarioRepositorio
 
 object RepositorioVeterinarios : VeterinarioRepositorio{
 
-    val repositorio: MutableList<Veterinario> = mutableListOf()
+    val repositorio: MutableList<Veterinario> = mutableStateListOf()
 
     private var persistencia: GestorBaseDato? = null
 
