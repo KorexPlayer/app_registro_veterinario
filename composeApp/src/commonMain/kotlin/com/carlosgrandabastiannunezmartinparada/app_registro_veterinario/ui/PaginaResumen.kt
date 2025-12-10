@@ -46,7 +46,7 @@ import kotlin.random.Random
 import kotlin.time.Instant
 
 
-enum class Type {AGREGAR, LISTADO}
+ enum class Type {AGREGAR, LISTADO}
 
 @Composable
 @Preview
@@ -102,7 +102,7 @@ private fun Listado() {
             "Genero: ${
                 (mascota.getGenero()).toString()
                     .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
-            } y Edad: ${mascota.getEdad()}" + ".\nDato de tu mascota: ${mascota.datosegundato()}"
+            }, Edad: ${mascota.getEdad()} y el peso es de: ${mascota.getPeso()}" + ".\nDato de tu mascota: ${mascota.datosegundato()}"
         )
         ExpandableMediaCard(item = sample, onDeleteClick = { RepositorioAnimal.eliminarMascota(mascota.getId()) }, icon = Icons.Default.Delete, tinte = Color.Red)
     }
@@ -136,11 +136,11 @@ private fun AgregarMascota(onCancelar: () -> Unit, onRegistroExitoso: () -> Unit
     ) {
         Text("Registro Mascota", style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(5.dp))
         CampoTextField("Nombre Completo", value = nombre, onChange = { nombre = it })
-        CampoTextField("Edad (Numeros Enteros)", value = edad, onChange = { edad = it })
+        CampoTextField("Edad (En años: 2)", value = edad, onChange = { edad = it })
         AppDropdown("Genero", tgenero, selectedgenre, onOptionSelected = {nuevogenero -> selectedgenre = nuevogenero})
         AppDropdown("Tipo de Animal", tipo, selectedtype, onOptionSelected = { nuevoTipo -> selectedtype = nuevoTipo })
         CampoTextField("Raza", raza, onChange = { raza = it })
-        CampoTextField("Peso (Numeros Enteros)", peso, onChange = { peso = it })
+        CampoTextField("Peso (Solo Numero: 4.5)", peso, onChange = { peso = it })
         CampoTextField("Fecha de Nacimiento (AAAA-MM-DD) ", fechaNacimiento, onChange = { fechaNacimiento = it })
         when (selectedtype) {
             "Ave" -> {
@@ -167,7 +167,7 @@ private fun AgregarMascota(onCancelar: () -> Unit, onRegistroExitoso: () -> Unit
             try {
                 if (nombre.isEmpty() || edad.isEmpty() || fechaNacimiento.isEmpty() || peso.isEmpty() || raza.isEmpty() || especialstr.isEmpty()) {
                     error = "Rellene todos los campos"
-                } else if (!(ComprobarDato(nombre, "nonum") xor (!(ComprobarDato(edad, "onlynum") or !(ComprobarDato(peso, "onlynum")))))) {
+                } else if (!(ComprobarDato(nombre, "nonum") xor (!(ComprobarDato(edad, "onlynum") or !(ComprobarDato(peso, "onlynum.")))))) {
                     error = "El nombre no puede contener numeros ni edad, peso o algun dato en numero no puede contener letras."
                 } else {
                     error = null

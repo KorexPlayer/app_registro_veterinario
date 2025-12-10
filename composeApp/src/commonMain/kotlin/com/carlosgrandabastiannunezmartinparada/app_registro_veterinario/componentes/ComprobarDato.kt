@@ -8,7 +8,7 @@ fun ComprobarDato(dato: String, tipo: String): Boolean {
 
     when (tipo) {
         "correo" -> {
-            if (dato.contains("@")){
+            if (!(dato.contains("@") && dato.contains(".com"))) {
                 return false
             }
         }
@@ -18,7 +18,12 @@ fun ComprobarDato(dato: String, tipo: String): Boolean {
             }
         }
         "onlynum" -> {
-            if (dato.any { it.isLetter()}) {
+            if (dato.any { it.isLetter()} ) {
+                return false
+            }
+        }
+        "onlynum." -> {
+            if (dato.any { !it.isDigit() && it != '.' }) {
                 return false
             }
         }

@@ -44,11 +44,11 @@ fun RegisterPage(
     val scrollState = rememberScrollState()
     Column(modifier = Modifier.padding(10.dp).verticalScroll(scrollState), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
         Text("Registro", style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(5.dp))
-        CampoTextField("RUT", value = rut, onChange = { rut = it })
+        CampoTextField("RUT (Sin digito Verificador)", value = rut, onChange = { rut = it })
         CampoTextField("Nombre Completo", value = nombre, onChange = { nombre = it })
-        CampoTextField("Correo Electronico", value = email, onChange = { email = it })
+        CampoTextField("Correo Electronico (ej: xxxx@xxx.com", value = email, onChange = { email = it })
         CampoTextField("Direccion", value = direccion, onChange = { direccion = it })
-        CampoTextField("Numero de Telefono", value = telefono, onChange = { telefono = it })
+        CampoTextField("Numero de Telefono (Solo numeros: 987654321)", value = telefono, onChange = { telefono = it })
         CampoPasswordField("Contraseña", value = password, onChange = { password = it })
         CampoPasswordField("Ingrese nuevamente Contraseña", value = password2, onChange = { password2 = it })
         error?.let {
@@ -59,10 +59,15 @@ fun RegisterPage(
             if(rut.isEmpty() || nombre.isEmpty() || email.isEmpty() || direccion.isEmpty() || telefono.isEmpty() || password.isEmpty() || password2.isEmpty()) {
                 error = "Rellene todos los campos"
             }
-            else if(!(ComprobarDato(nombre, "nonum") xor ComprobarDato(email, "correo"))) {
-                error = "El nombre solo letras o El correo debe ser de tipo xxxx@xxx.xxx"
+            else if(!(ComprobarDato(nombre, "nonum") and !ComprobarDato(email, "correo"))) {
+                error = "El nombre solo letras o El correo debe ser de tipo xxxx@xxx.com"
             }
-
+            else if (!ComprobarDato(telefono, "onlynum")) {
+                error = "El numero de telefono solo puede ser: 987654321"
+            }
+            else if (!ComprobarDato(rut, "onlynum")) {
+                error = "El rut es sin el digito verificador y sin ninguna letra"
+            }
             else {
                 error = null
                 val id = Random.nextInt(99999)
