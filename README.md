@@ -4,9 +4,7 @@
  - Register
 ## Que hay que revisar
 
- - AndroidDriverStorage
- - Arreglar Boton de Tema Oscuro
- - 
+ - En El repositorioDeObjetosMedicos, no se guardan las medicinas
 
 # APP Registro Veterinario
 
