@@ -102,7 +102,7 @@ private fun Listado() {
             "Genero: ${
                 (mascota.getGenero()).toString()
                     .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
-            } y Edad: ${mascota.getEdad()}"
+            } y Edad: ${mascota.getEdad()}" + ".\n Dato de tu mascota: ${mascota.datosegundato()}"
         )
         ExpandableMediaCard(item = sample, onDeleteClick = { RepositorioAnimal.eliminarMascota(mascota.getId()) }, icon = Icons.Default.Delete, tinte = Color.Red)
     }
