@@ -14,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -21,16 +22,15 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun ExpandableMediaCard(
     item: CardItem,
-    onDeleteClick: () -> Unit
+    onDeleteClick: () -> Unit,
+    icon: ImageVector,
+    tinte: Color
 ) {
     // Estado para saber si la tarjeta está expandida o no
     var expanded by remember { mutableStateOf(false) }
 
     Card(
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color(0xFFEBE8EB) // Un gris/lila muy suave similar a la imagen
-        ),
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -57,19 +57,16 @@ fun ExpandableMediaCard(
                         text = item.title,
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
-                        color = Color.Black
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = item.type,
                         style = MaterialTheme.typography.bodySmall,
-                        color = Color(0xFF673AB7), // Color morado similar a la imagen
                         fontWeight = FontWeight.Medium
                     )
                     Text(
                         text = item.status,
                         style = MaterialTheme.typography.bodySmall,
-                        color = Color.Gray
                     )
                 }
 
@@ -79,9 +76,9 @@ fun ExpandableMediaCard(
                     modifier = Modifier.size(24.dp)
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = "Borrar",
-                        tint = Color.Red
+                        imageVector = icon,
+                        contentDescription = "",
+                        tint = tinte
                     )
                 }
             }
@@ -94,13 +91,11 @@ fun ExpandableMediaCard(
 
                 Text(
                     text = "Detalles adicionales:",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = Color.DarkGray
+                    style = MaterialTheme.typography.labelSmall
                 )
                 Text(
                     text = item.extraInfo,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
+                    style = MaterialTheme.typography.bodyMedium
                 )
             }
         }

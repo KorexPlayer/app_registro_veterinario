@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
@@ -21,6 +23,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -95,9 +99,12 @@ private fun Listado() {
             mascota.getNombre(),
             "${mascota::class.simpleName}",
             mascota.getRaza(),
-            "Genero: ${mascota.getGenero()} y Edad: ${mascota.getEdad()}"
+            "Genero: ${
+                (mascota.getGenero()).toString()
+                    .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+            } y Edad: ${mascota.getEdad()}"
         )
-        ExpandableMediaCard(item = sample, onDeleteClick = { RepositorioAnimal.eliminarMascota(mascota.getId()) })
+        ExpandableMediaCard(item = sample, onDeleteClick = { RepositorioAnimal.eliminarMascota(mascota.getId()) }, icon = Icons.Default.Delete, tinte = Color.Red)
     }
 }
 
@@ -129,11 +136,11 @@ private fun AgregarMascota(onCancelar: () -> Unit, onRegistroExitoso: () -> Unit
     ) {
         Text("Registro Mascota", style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(5.dp))
         CampoTextField("Nombre Completo", value = nombre, onChange = { nombre = it })
-        CampoTextField("Edad", value = edad, onChange = { edad = it })
+        CampoTextField("Edad (Numeros Enteros)", value = edad, onChange = { edad = it })
         AppDropdown("Genero", tgenero, selectedgenre, onOptionSelected = {nuevogenero -> selectedgenre = nuevogenero})
         AppDropdown("Tipo de Animal", tipo, selectedtype, onOptionSelected = { nuevoTipo -> selectedtype = nuevoTipo })
         CampoTextField("Raza", raza, onChange = { raza = it })
-        CampoTextField("Peso", peso, onChange = { peso = it })
+        CampoTextField("Peso (Numeros Enteros)", peso, onChange = { peso = it })
         CampoTextField("Fecha de Nacimiento (AAAA-MM-DD) ", fechaNacimiento, onChange = { fechaNacimiento = it })
         when (selectedtype) {
             "Ave" -> {
@@ -143,10 +150,10 @@ private fun AgregarMascota(onCancelar: () -> Unit, onRegistroExitoso: () -> Unit
                 CampoTextField("Tipo de Oreja", especialstr, onChange = { especialstr = it })
             }
             "Gato" -> {
-                CampoTextField("Longitud de Bigotes", especialstr, onChange = { especialstr = it })
+                CampoTextField("Longitud de Bigotes (Numeros Enteros)", especialstr, onChange = { especialstr = it })
             }
             "Hamster" -> {
-                CampoTextField("Capacidad Abazones (grs)", especialstr, onChange = { especialstr = it })
+                CampoTextField("Capacidad Abazones (Numeros Enteros)", especialstr, onChange = { especialstr = it })
             }
             "Perro" -> {
                 CampoTextField("Tipo de Hocico", especialstr, onChange = { especialstr = it })
@@ -161,7 +168,7 @@ private fun AgregarMascota(onCancelar: () -> Unit, onRegistroExitoso: () -> Unit
                 if (nombre.isEmpty() || edad.isEmpty() || fechaNacimiento.isEmpty() || peso.isEmpty() || raza.isEmpty() || especialstr.isEmpty()) {
                     error = "Rellene todos los campos"
                 } else if (!(ComprobarDato(nombre, "nonum") xor (!(ComprobarDato(edad, "onlynum") or !(ComprobarDato(peso, "onlynum")))))) {
-                    error = "El nombre solo letras o Solo rellene con lo solicitado"
+                    error = "El nombre no puede contener numeros ni edad, peso o algun dato en numero no puede contener letras."
                 } else {
                     error = null
                     val idAnimal = Random.nextInt(99999)
@@ -252,7 +259,7 @@ private fun AgregarMascota(onCancelar: () -> Unit, onRegistroExitoso: () -> Unit
             }
             catch (e: Exception) {
                 if (e.toString().contains("java.lang.NumberFormatException")) {
-                    error = "Colocaste letras donden no debias"
+                    error = "Hay letras en algun dato que solo recibe numeros."
                 }
                 else {
                     error = e.toString()

@@ -2,6 +2,8 @@ package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person2
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,7 +27,9 @@ fun VeterinariosVisitados() {
             val sampleItem = CardItem(title = veterinarios.getNombre(), type = veterinarios.getEspecialidad(), veterinarios.getHorarioAtencion(), veterinarios.getDescripcionServicio() + "Numero Telfonico: ${veterinarios.getTelefono()} y Correo Electronico: ${veterinarios.getEmail()}, Nos pueden encontrar en: ${veterinarios.getDireccion()}")
             ExpandableMediaCard(
                 item = sampleItem,
-                onDeleteClick = {}
+                onDeleteClick = {},
+                icon = Icons.Default.Person2,
+                tinte = Color.White
             )
             Spacer(modifier = Modifier.height(12.dp))
         }
