@@ -2,6 +2,7 @@ package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.compon
 /**
 * "correo" para verificar correos
 * "nonum" para verificar que no existan numeros en el dato
+ *"onlynum" para verificar que no existan letras en el dato excepto el punto
 */
 fun ComprobarDato(dato: String, tipo: String): Boolean {
 
@@ -13,6 +14,11 @@ fun ComprobarDato(dato: String, tipo: String): Boolean {
         }
         "nonum" -> {
             if (dato.any { it.isDigit() }) {
+                return false
+            }
+        }
+        "onlynum" -> {
+            if (dato.any { it.isLetter() && it != '.' }) {
                 return false
             }
         }

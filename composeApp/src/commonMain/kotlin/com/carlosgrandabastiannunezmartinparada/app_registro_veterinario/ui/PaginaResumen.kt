@@ -29,10 +29,17 @@ import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.compone
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.componentes.CardItem
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.componentes.ComprobarDato
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.componentes.ExpandableMediaCard
+import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.animales.AveDomestica
+import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.animales.Conejo
+import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.animales.Gato
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.animales.Genero
+import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.animales.Hamster
+import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.modelo.animales.Perro
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia.RepositorioAnimal
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia.UsuarioActual
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import kotlin.random.Random
+import kotlin.time.Instant
 
 
 enum class Type {AGREGAR, LISTADO}
@@ -88,7 +95,7 @@ private fun Listado() {
             mascota.getNombre(),
             "${mascota::class.simpleName}",
             mascota.getRaza(),
-            "${mascota.getGenero()}"
+            "Genero: ${mascota.getGenero()} y Edad: ${mascota.getEdad()}"
         )
         ExpandableMediaCard(item = sample, onDeleteClick = { RepositorioAnimal.eliminarMascota(mascota.getId()) })
     }
@@ -105,7 +112,6 @@ private fun AgregarMascota(onCancelar: () -> Unit, onRegistroExitoso: () -> Unit
     var nombre by remember {mutableStateOf("")}
     var edad by remember {mutableStateOf("")}
     var fechaNacimiento by remember {mutableStateOf("")}
-    var genero by remember {mutableStateOf(Genero.MACHO)}
     var raza by remember {mutableStateOf("")}
     var peso by remember {mutableStateOf("")}
     var especialstr by remember {mutableStateOf("")}
@@ -117,17 +123,17 @@ private fun AgregarMascota(onCancelar: () -> Unit, onRegistroExitoso: () -> Unit
     Column(
         modifier = Modifier
             .padding(10.dp)
-            .verticalScroll(scrollState), // <--- ESTO HACE LA MAGIA
+            .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Text("Registro Mascota", style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(5.dp))
         CampoTextField("Nombre Completo", value = nombre, onChange = { nombre = it })
-        CampoTextField("Edad", value = edad.toString(), onChange = { edad = it })
+        CampoTextField("Edad", value = edad, onChange = { edad = it })
         AppDropdown("Genero", tgenero, selectedgenre, onOptionSelected = {nuevogenero -> selectedgenre = nuevogenero})
         AppDropdown("Tipo de Animal", tipo, selectedtype, onOptionSelected = { nuevoTipo -> selectedtype = nuevoTipo })
         CampoTextField("Raza", raza, onChange = { raza = it })
-        CampoTextField("Peso", peso.toString(), onChange = { peso = it })
+        CampoTextField("Peso", peso, onChange = { peso = it })
         CampoTextField("Fecha de Nacimiento (AAAA-MM-DD) ", fechaNacimiento, onChange = { fechaNacimiento = it })
         when (selectedtype) {
             "Ave" -> {
@@ -151,18 +157,108 @@ private fun AgregarMascota(onCancelar: () -> Unit, onRegistroExitoso: () -> Unit
             Spacer(modifier = Modifier.height(8.dp))
         }
         Button(onClick = {
-            if(false) {
-                error = "Rellene todos los campos"
-            }
-            else if(!(ComprobarDato(nombre, "nonum"))) {
-                error = "El nombre solo letras o El correo debe ser de tipo xxxx@xxx.xxx"
-            }
+            try {
+                if (nombre.isEmpty() || edad.isEmpty() || fechaNacimiento.isEmpty() || peso.isEmpty() || raza.isEmpty() || especialstr.isEmpty()) {
+                    error = "Rellene todos los campos"
+                } else if (!(ComprobarDato(nombre, "nonum") xor !(ComprobarDato(edad, "onlynum") xor !(ComprobarDato(
+                        peso,
+                        "onlynum"
+                    ) xor !(ComprobarDato(especialnum.toString(), "onlynum")))))
+                ) {
+                    error = "El nombre solo letras o Solo rellene con lo solicitado"
+                } else {
+                    error = null
+                    val idAnimal = Random.nextInt(99999)
+                    val fechaNacimientoo = Instant.parse("${fechaNacimiento}T00:00:00Z")
+                    when (selectedtype) {
+                        "Ave" -> {
+                            RepositorioAnimal.crearMascota(
+                                AveDomestica(
+                                    idAnimal,
+                                    UsuarioActual.usuarioActual!!,
+                                    nombre,
+                                    edad.toInt(),
+                                    fechaNacimientoo,
+                                    selectedgenre,
+                                    raza,
+                                    peso.toDouble(),
+                                    especialstr
+                                )
+                            )
+                        }
 
-            else {
-                error = null
-                onRegistroExitoso()
+                        "Conejo" -> {
+                            RepositorioAnimal.crearMascota(
+                                Conejo(
+                                    idAnimal,
+                                    UsuarioActual.usuarioActual!!,
+                                    nombre,
+                                    edad.toInt(),
+                                    fechaNacimientoo,
+                                    selectedgenre,
+                                    raza,
+                                    peso.toDouble(),
+                                    especialstr
+                                )
+                            )
+                        }
+
+                        "Gato" -> {
+                            RepositorioAnimal.crearMascota(
+                                Gato(
+                                    idAnimal,
+                                    UsuarioActual.usuarioActual!!,
+                                    nombre,
+                                    edad.toInt(),
+                                    fechaNacimientoo,
+                                    selectedgenre,
+                                    raza,
+                                    peso.toDouble(),
+                                    especialnum.toFloat()
+                                )
+                            )
+                        }
+
+                        "Hamster" -> {
+                            RepositorioAnimal.crearMascota(
+                                Hamster(
+                                    idAnimal,
+                                    UsuarioActual.usuarioActual!!,
+                                    nombre,
+                                    edad.toInt(),
+                                    fechaNacimientoo,
+                                    selectedgenre,
+                                    raza,
+                                    peso.toDouble(),
+                                    especialnum.toFloat()
+                                )
+                            )
+                        }
+
+                        "Perro" -> {
+                            RepositorioAnimal.crearMascota(
+                                Perro(
+                                    idAnimal,
+                                    UsuarioActual.usuarioActual!!,
+                                    nombre,
+                                    edad.toInt(),
+                                    fechaNacimientoo,
+                                    selectedgenre,
+                                    raza,
+                                    peso.toDouble(),
+                                    especialstr
+                                )
+                            )
+                        }
+                    }
+                    onRegistroExitoso()
+                }
             }
-        }) {
+            catch (e: Exception) {
+                error = e.toString()
+            }
+        }
+            ) {
             Text("Registrarse")
 
         }

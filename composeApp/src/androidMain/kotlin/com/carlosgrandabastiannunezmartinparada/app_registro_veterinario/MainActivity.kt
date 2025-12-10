@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
         val rutaAndroid = filesDir.absolutePath
         val driver = AndroidDriverStorage(rutaAndroid)
         val persistencia = GestorBaseDato(driver)
-        //RepositorioAnimal.init(persistencia)
+        RepositorioAnimal.init(persistencia)
         //RepositorioObjetoVeterinario.init(persistencia)
         RepositorioVeterinarios.init(persistencia)
         RepositorioDueno.init(persistencia, RepositorioAnimal)

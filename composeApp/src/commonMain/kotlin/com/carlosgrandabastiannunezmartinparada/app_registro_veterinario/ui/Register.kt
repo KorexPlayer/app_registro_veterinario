@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -39,7 +41,8 @@ fun RegisterPage(
     var direccion by remember {mutableStateOf("")}
     var telefono by remember {mutableStateOf("")}
     var error by remember {mutableStateOf<String?>(null)}
-    Column(modifier = Modifier.padding(10.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+    val scrollState = rememberScrollState()
+    Column(modifier = Modifier.padding(10.dp).verticalScroll(scrollState), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
         Text("Registro", style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(5.dp))
         CampoTextField("RUT", value = rut, onChange = { rut = it })
         CampoTextField("Nombre Completo", value = nombre, onChange = { nombre = it })

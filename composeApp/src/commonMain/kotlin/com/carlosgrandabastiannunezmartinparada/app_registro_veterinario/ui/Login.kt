@@ -59,7 +59,7 @@ fun LoginPage(
                 val duenio = RepositorioDueno.autenticarUsuario(rut, password)
                 if (duenio != null){
                     error = null
-                    UsuarioActual.usuarioActual = rut
+                    UsuarioActual.usuarioActual = duenio.getId()
                     UsuarioActual.nombreActual = duenio.getNombre()
                     onLoginSuccess()
                 }

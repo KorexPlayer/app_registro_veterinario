@@ -22,15 +22,11 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun MainPage(
     onCerrarSesion: () -> Unit
 ) {
-    // Estado para saber qué pestaña está seleccionada
     var selectedItem by remember { mutableStateOf(0) }
-
-    // Lista de opciones para la barra inferior (Iconos y Textos)
     val items = listOf("Principal", "Controles", "Medico Vet.", "Historial", "Vacunas")
     val icons = listOf(Icons.Default.Home, Icons.Default.List, Icons.Default.Person, Icons.Default.List, Icons.Default.Archive)
 
     Scaffold(
-        // 1. Barra Inferior (Navigation Bar) fija al fondo
         bottomBar = {
             NavigationBar {
                 items.forEachIndexed { index, item ->
@@ -48,7 +44,7 @@ fun MainPage(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
-                .padding(16.dp), // Margen general
+                .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
@@ -64,7 +60,6 @@ fun MainPage(
             }
 
             Spacer(modifier = Modifier.height(20.dp))
-            // Area de contenido cambiante (Ocupa el espacio disponible)
             Box(
                 modifier = Modifier
                     .weight(1f)

@@ -3,6 +3,7 @@ package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario
 import MainPage
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -41,31 +42,29 @@ fun App() {
     }) {
             var pantalla by remember { mutableStateOf(Pantallas.LOGIN) }
             Surface(modifier = Modifier.fillMaxSize()) {
-                Box (modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                   Row(modifier = Modifier.width(200.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
-                        Text("TemaOscuro: ",modifier = Modifier.weight(1f), textAlign = TextAlign.Right)
-                       Switch(checked = checked, onCheckedChange = { checked = it }, modifier = Modifier.weight(1f))
-                    }
-                    Spacer(Modifier.height(12.dp))
-                }
-                Box(modifier = Modifier
+                Column(modifier = Modifier
                     .fillMaxSize()
                     .padding(16.dp))
                 {
-
                     when (pantalla) {
-                        Pantallas.LOGIN -> LoginPage(
+                        Pantallas.LOGIN -> {LoginPage(
                             onLoginSuccess = { pantalla = Pantallas.MAIN },
                             onRegister = { pantalla = Pantallas.REGISTRO },
                         )
+                            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
+                                Text("TemaOscuro: ",modifier = Modifier.weight(1f), textAlign = TextAlign.Right)
+                                Switch(checked = checked, onCheckedChange = { checked = it }, modifier = Modifier.weight(1f))
+                            }
+                            Spacer(Modifier.height(12.dp))
+                        }
                         Pantallas.REGISTRO -> RegisterPage(
                             onLogin = { pantalla = Pantallas.LOGIN }
                         )
                         Pantallas.MAIN -> MainPage(
                             onCerrarSesion = {pantalla = Pantallas.LOGIN}
                         )
-
                     }
+
                 }
 
             }

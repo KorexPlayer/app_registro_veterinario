@@ -38,7 +38,7 @@ abstract class Mascota (
         listadoRegistroVacuna.add(registro)
         RepositorioObjetoVeterinario.anadirRegistroVacuna(registro)
     }
-    fun agregarTratamiento(id : Int, idMascota: Int, idVeterinario: Int, nombreTratamiento: String, razonTratamiento: String, Medicamentos: List<List<String>>, observaciones : String) {
+    fun agregarTratamiento(id : Int, idMascota: Int, idVeterinario: Int, nombreTratamiento: String, razonTratamiento: String, Medicamentos: List<String>, observaciones : String) {
         val tratamiento = Tratamiento(id, idMascota, idVeterinario, nombreTratamiento, razonTratamiento, Medicamentos, observaciones)
         listadoTratamiento.add(tratamiento)
         RepositorioObjetoVeterinario.anadirTratamiento(tratamiento)

@@ -6,7 +6,7 @@ class Tratamiento(
     private val idVeterinario: Int,
     private val nombreTratamiento: String,
     private val razonTratamiento: String,
-    private val Medicamentos: List<List<String>>, // [nombre, dosis, frecuencia, duracion]
+    private val Medicamentos: List<String>, // "nombre, dosis, frecuencia, duracion"
     private val observaciones : String
 ) {
     //Getter

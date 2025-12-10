@@ -2,7 +2,7 @@ package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persis
 
 class UsuarioActual() {
     companion object {
-        var usuarioActual: String? = null
+        var usuarioActual: Int? = null
         var nombreActual: String? = null
     }
 }
