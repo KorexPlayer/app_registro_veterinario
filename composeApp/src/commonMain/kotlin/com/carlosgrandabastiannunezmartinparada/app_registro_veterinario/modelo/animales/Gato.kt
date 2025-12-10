@@ -25,4 +25,11 @@ class Gato (
 ) {
     //Getter
     fun getLongitudBigotes() = longitudBigotes
+
+    override fun datosegundato(): String {
+        if (!(longitudBigotes >= 3)) {
+            return "Cuida a los bigotes de tu gato ya que son muy cortos y puede afectar a su movilidad."
+        }
+        return "Tu gato tiene buenos bigotes, cuidalos porque son importantes para el."
+    }
 }

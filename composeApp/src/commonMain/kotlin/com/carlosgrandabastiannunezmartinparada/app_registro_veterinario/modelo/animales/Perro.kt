@@ -25,4 +25,18 @@ class Perro (
 ) {
     //Getter
     fun getTipoHocico() = tipoHocico
+    override fun datosegundato(): String {
+        if (getTipoHocico() == "Largo") {
+            return "Tu perro tiene buena respiracion y sensibilidad mayor, cuida su nariz"
+        }
+        else if (getTipoHocico() == "Mediano") {
+            return "Tu perro tiene el balance perfecto entre sensibilidad y respiracion."
+        }
+        else if (getTipoHocico() == "Corto") {
+            return "Tu perro tiene una nariz corta, asi que cuidalo de las enfermedades."
+        }
+        else {
+            return "Tu perro tiene otro tipo de nariz."
+        }
+    }
 }

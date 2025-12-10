@@ -53,4 +53,6 @@ abstract class Mascota (
     fun getGenero() = genero
     fun getRaza() = raza
     fun getPeso() = peso
+
+    abstract fun datosegundato(): String
 }

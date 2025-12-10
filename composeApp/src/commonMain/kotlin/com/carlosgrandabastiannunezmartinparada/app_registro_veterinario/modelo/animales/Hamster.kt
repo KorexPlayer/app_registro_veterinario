@@ -25,4 +25,13 @@ class Hamster (
 ) {
     //Getter
     fun getCapacidadAbazonesGramos() = capacidadAbazonesGramos
+
+    override fun datosegundato(): String {
+        if ((getPeso()*0.2) <= getCapacidadAbazonesGramos()) {
+            return "LLeva tu Hamster al veterinario, puede tener problemas"
+        }
+        else {
+            return "Tu hamster esta en buenas condiciones."
+        }
+    }
 }

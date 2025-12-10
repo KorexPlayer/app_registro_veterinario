@@ -25,4 +25,16 @@ class Conejo (
 ) {
     //Getter
     fun getTipoOrejas() = tipoOrejas
+
+    override fun datosegundato(): String {
+        if (tipoOrejas == "Largo") {
+            return "Cuida las orejas de tu conejo porque puede acumular infecciones, suciedad, etc."
+        }
+        else if (tipoOrejas == "Corta") {
+            return "Limpia las orejas de tu conejo, este tiene buenas orejas para moverse y detectar seres en su entorno."
+        }
+        else {
+            return "Cuida las orejas de tu conejo, no puedo determinar ahora que tipo de consejo darte."
+        }
+    }
 }
