@@ -67,7 +67,7 @@ fun VeterinariosVisitados() {
                 onClick = { vistaActual = TypeV.AGREGAR },
                 modifier = Modifier.fillMaxWidth(0.6f)
             ) {
-                Text("Agregar Mascota")
+                Text("Agregar Veterinario")
             }
         }
     }
