@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.sp
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia.UsuarioActual
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.ui.PaginaResumen
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.ui.VeterinariosVisitados
+import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.ui.PaginaVacunas
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @kotlin.time.ExperimentalTime
@@ -71,7 +72,7 @@ fun MainPage(
                     1 -> Text("Controles Veterinarios")
                     2 -> VeterinariosVisitados()
                     3 -> Text("Historial Médico")
-                    4 -> Text("Vacunas")
+                    4 -> PaginaVacunas()
                 }
             }
         }

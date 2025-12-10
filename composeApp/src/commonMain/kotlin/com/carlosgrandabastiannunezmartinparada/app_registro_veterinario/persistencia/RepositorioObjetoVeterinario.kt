@@ -193,8 +193,10 @@ object RepositorioObjetoVeterinario : ObjetoVeterinarioRepositorio {
 
     // TRATAMIENTO
     private fun tratamientoATexto(t: Tratamiento): String {
+        val medicamentos = t.getMedicamentos().joinToString(",")
+
         return "${t.getId()}$DELIMITADOR${t.getIdMascota()}$DELIMITADOR${t.getIdVeterinario()}$DELIMITADOR" +
-                "${t.getNombreTratamiento()}$DELIMITADOR${t.getRazonTratamiento()}$DELIMITADOR${t.getObservaciones()}"
+                "${t.getNombreTratamiento()}$DELIMITADOR${t.getRazonTratamiento()}$DELIMITADOR${t.getObservaciones()}$DELIMITADOR$medicamentos"
     }
 
     private fun textoATratamiento(data: String): Tratamiento? {
@@ -207,11 +209,14 @@ object RepositorioObjetoVeterinario : ObjetoVeterinarioRepositorio {
         val nombre = parts.getOrNull(3)
         val razon = parts.getOrNull(4)
         val obs = parts.getOrNull(5)
+        val medicamentosStr = parts.getOrNull(6)
 
         if (nombre == null || razon == null || obs == null) {
             return null
         }
-        return Tratamiento(id, idMascota, idVeterinario, nombre, razon, emptyList(), obs)
+        val listMedicamentos = if (medicamentosStr.isNullOrEmpty()) emptyList() else medicamentosStr.split(",")
+
+        return Tratamiento(id, idMascota, idVeterinario, nombre, razon, listMedicamentos, obs)
     }
 
 

@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
         val driver = AndroidDriverStorage(rutaAndroid)
         val persistencia = GestorBaseDato(driver)
         RepositorioAnimal.init(persistencia)
-        //RepositorioObjetoVeterinario.init(persistencia)
+        RepositorioObjetoVeterinario.init(persistencia)
         RepositorioVeterinarios.init(persistencia)
         RepositorioDueno.init(persistencia, RepositorioAnimal)
         setContent {

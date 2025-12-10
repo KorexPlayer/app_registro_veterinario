@@ -15,5 +15,6 @@ class Tratamiento(
     fun getIdVeterinario() = idVeterinario
     fun getNombreTratamiento() = nombreTratamiento
     fun getRazonTratamiento() = razonTratamiento
+    fun getMedicamentos(): List<String> = Medicamentos
     fun getObservaciones() = observaciones
 }
