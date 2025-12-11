@@ -1,11 +1,3 @@
-## Archivos Listos
-
- - Login
- - Register
-## Que hay que revisar
-
- - En El repositorioDeObjetosMedicos, no se guardan las medicinas
-
 # APP Registro Veterinario
 
 Este es un proyecto de Kotlin Multiplatform, en el que hemos creado una aplicacion de Veterinaria
