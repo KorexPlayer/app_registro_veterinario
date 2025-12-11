@@ -115,6 +115,7 @@ private fun Listado() {
 private fun AgregarMascota(onCancelar: () -> Unit, onRegistroExitoso: () -> Unit) {
     val scrollState = rememberScrollState()
     val tipo = listOf("Ave", "Conejo", "Gato", "Hamster", "Perro")
+    val picos = listOf("Conico y Corto", "Ganchudos", "Largo y delgado", "Lanza", "Peine")
     val tgenero = listOf<Genero>(Genero.MACHO, Genero.HEMBRA)
     var nombre by remember {mutableStateOf("")}
     var edad by remember {mutableStateOf("")}
@@ -125,6 +126,7 @@ private fun AgregarMascota(onCancelar: () -> Unit, onRegistroExitoso: () -> Unit
     var especialnum by remember {mutableStateOf(0.0)}
     var selectedtype by remember { mutableStateOf<String>(tipo[0]) }
     var selectedgenre by remember { mutableStateOf<Genero>(tgenero[0])}
+    var selectedpeak by remember { mutableStateOf<String>(picos[0])}
     var error by remember {mutableStateOf<String?>(null)}
 
     Column(
@@ -140,23 +142,24 @@ private fun AgregarMascota(onCancelar: () -> Unit, onRegistroExitoso: () -> Unit
         AppDropdown("Genero", tgenero, selectedgenre, onOptionSelected = {nuevogenero -> selectedgenre = nuevogenero})
         AppDropdown("Tipo de Animal", tipo, selectedtype, onOptionSelected = { nuevoTipo -> selectedtype = nuevoTipo })
         CampoTextField("Raza", raza, onChange = { raza = it })
-        CampoTextField("Peso (Solo Numero: 4.5)", peso, onChange = { peso = it })
+        CampoTextField("Peso (En Kg: 4.5)", peso, onChange = { peso = it })
         CampoTextField("Fecha de Nacimiento (AAAA-MM-DD) ", fechaNacimiento, onChange = { fechaNacimiento = it })
         when (selectedtype) {
             "Ave" -> {
-                CampoTextField("Forma de Pico", especialstr, onChange = { especialstr = it })
+                AppDropdown("Forma de Pico", picos, selectedpeak, onOptionSelected = { nuevopeak -> selectedpeak = nuevopeak })
+                especialstr = selectedpeak
             }
             "Conejo" -> {
-                CampoTextField("Tipo de Oreja", especialstr, onChange = { especialstr = it })
+                CampoTextField("Tipo de Oreja (Largo/Corta)", especialstr, onChange = { especialstr = it })
             }
             "Gato" -> {
-                CampoTextField("Longitud de Bigotes (Numeros Enteros)", especialstr, onChange = { especialstr = it })
+                CampoTextField("Longitud de Bigotes (En cm: 10)", especialstr, onChange = { especialstr = it })
             }
             "Hamster" -> {
-                CampoTextField("Capacidad Abazones (Numeros Enteros)", especialstr, onChange = { especialstr = it })
+                CampoTextField("Capacidad Abazones (En grs: 200)", especialstr, onChange = { especialstr = it })
             }
             "Perro" -> {
-                CampoTextField("Tipo de Hocico", especialstr, onChange = { especialstr = it })
+                CampoTextField("Tipo de Hocico (Largo/Mediano/Corto)", especialstr, onChange = { especialstr = it })
             }
         }
         error?.let {
@@ -185,7 +188,7 @@ private fun AgregarMascota(onCancelar: () -> Unit, onRegistroExitoso: () -> Unit
                                     selectedgenre,
                                     raza,
                                     peso.toDouble(),
-                                    especialstr
+                                    selectedpeak
                                 )
                             )
                         }
@@ -260,6 +263,9 @@ private fun AgregarMascota(onCancelar: () -> Unit, onRegistroExitoso: () -> Unit
             catch (e: Exception) {
                 if (e.toString().contains("java.lang.NumberFormatException")) {
                     error = "Hay letras en algun dato que solo recibe numeros."
+                }
+                else if (e.toString().contains("InstantFormatException") || e.toString().contains("DateTimeParseException")) {
+                    error = "Fecha inválida (Use AAAA-MM-DD)."
                 }
                 else {
                     error = e.toString()

@@ -59,8 +59,11 @@ fun RegisterPage(
             if(rut.isEmpty() || nombre.isEmpty() || email.isEmpty() || direccion.isEmpty() || telefono.isEmpty() || password.isEmpty() || password2.isEmpty()) {
                 error = "Rellene todos los campos"
             }
-            else if(!(ComprobarDato(nombre, "nonum") and !ComprobarDato(email, "correo"))) {
-                error = "El nombre solo letras o El correo debe ser de tipo xxxx@xxx.com"
+            else if(!(ComprobarDato(nombre, "nonum"))) {
+                error = "El nombre solo letras"
+            }
+            else if (!ComprobarDato(email, "correo")) {
+                error = "El correo debe ser de tipo xxxx@xxx.com"
             }
             else if (!ComprobarDato(telefono, "onlynum")) {
                 error = "El numero de telefono solo puede ser: 987654321"

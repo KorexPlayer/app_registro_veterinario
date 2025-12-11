@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Person2
 import androidx.compose.material3.Button
 import androidx.compose.material3.FloatingActionButton
@@ -20,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.componentes.CampoTextField
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.componentes.CardItem
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.componentes.ComprobarDato
@@ -41,7 +43,7 @@ fun VeterinariosVisitados() {
     ) {
 
         Text("Contactos de los Veterinarios", style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(5.dp))
-
+        if (RepositorioVeterinarios.listar().isEmpty()) Text("No se encuentra nadie agregue a algun veterinario/a.", color = MaterialTheme.colorScheme.error, fontSize = 12.sp)
         if (vistaActual == TypeV.AGREGAR) {
             AgregarVeterinario(
                 onRegresar = { vistaActual = TypeV.LISTADO }
@@ -57,8 +59,8 @@ fun VeterinariosVisitados() {
                 ExpandableMediaCard(
                     item = sampleItem,
                     onDeleteClick = { RepositorioVeterinarios.eliminarVeterinario(veterinarios.getId())},
-                    icon = Icons.Default.Person2,
-                    tinte = Color.White
+                    icon = Icons.Default.Delete,
+                    tinte = Color.Red
                 )
                 Spacer(modifier = Modifier.height(12.dp))
             }
@@ -95,7 +97,7 @@ fun AgregarVeterinario (
         CampoTextField("Numero de Telefono (Solo Numero: 987654321)", value = telefono, onChange = { telefono = it })
         CampoTextField("Especialidad", value = especialidad, onChange = { especialidad = it })
         CampoTextField("Horario de Atencion", value = horarioAtencion, onChange = { horarioAtencion = it })
-        CampoTextField("Descripcion del Servicio", value = descServicio, onChange = { descServicio = it }, modifier1 = Modifier.padding(5.dp).height(50.dp))
+        CampoTextField("Descripcion del Servicio", value = descServicio, onChange = { descServicio = it })
         error?.let {
             Text(text = it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodyMedium)
             Spacer(modifier = Modifier.height(8.dp))
