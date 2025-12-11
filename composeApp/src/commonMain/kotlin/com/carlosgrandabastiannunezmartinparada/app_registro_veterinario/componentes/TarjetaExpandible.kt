@@ -41,7 +41,7 @@ fun ExpandableMediaCard(
                     stiffness = Spring.StiffnessLow
                 )
             )
-            .clickable { expanded = !expanded } // Al hacer click en toda la tarjeta, cambia el estado
+            .clickable { expanded = !expanded } // Al hacer clic en toda la tarjeta, cambia el estado
     ) {
         Column(
             modifier = Modifier.padding(16.dp)

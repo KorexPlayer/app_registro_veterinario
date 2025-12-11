@@ -11,7 +11,6 @@ class AndroidDriverStorage(private val directorioBase: String ) : StorageDriver 
     private val fileSystem = FileSystem.SYSTEM
     private val basePath: Path = directorioBase.toPath()
 
-    // Bloque INIT: Lógica equivalente a directorioPadre.mkdirs()
     init {
         if (!fileSystem.exists(basePath)) {
             try {
@@ -22,22 +21,19 @@ class AndroidDriverStorage(private val directorioBase: String ) : StorageDriver 
         }
     }
 
-    // Lógica auxiliar: Equivalente a obtenerNombreArchivo() con sanitización
     private fun obtenerRutaArchivo(key: String): Path {
-        // Reemplazamos separadores para aplanar la estructura, igual que en tu lógica Desktop
+
         val nombreSanitizado = key
             .replace("/", "_")
             .replace("\\", "_")
             .replace(":", "_")
 
-        // Unimos el directorio base con el nombre sanitizado
         return basePath / nombreSanitizado
     }
 
     override fun put(key: String, data: ByteArray): Boolean {
         return try {
             val ruta = obtenerRutaArchivo(key)
-            // Equivalente a file.writeBytes(data)
             fileSystem.write(ruta) {
                 write(data)
             }
@@ -51,11 +47,7 @@ class AndroidDriverStorage(private val directorioBase: String ) : StorageDriver 
     override fun get(key: String): ByteArray? {
         val ruta = obtenerRutaArchivo(key)
 
-        // Equivalente a: if (archivo.exists() && archivo.isFile)
         if (!fileSystem.exists(ruta)) return null
-
-        // Nota: metadataOrNull ayuda a saber si es archivo o directorio,
-        // pero generalmente en Okio si puedes leerlo, es un archivo.
 
         return try {
             // Equivalente a file.readBytes()
@@ -69,17 +61,14 @@ class AndroidDriverStorage(private val directorioBase: String ) : StorageDriver 
     }
 
     override fun keys(prefix: String): List<String> {
-        // Sanitizamos el prefijo igual que la key
         val prefijoSanitizado = prefix
             .replace("/", "_")
             .replace("\\", "_")
             .replace(":", "_")
 
         return try {
-            // Equivalente a directorioPadre.listFiles { ... }
             fileSystem.list(basePath)
                 .filter { path ->
-                    // path.name te da solo el nombre del archivo sin la ruta completa
                     path.name.startsWith(prefijoSanitizado)
                 }
                 .map { it.name }
@@ -91,7 +80,7 @@ class AndroidDriverStorage(private val directorioBase: String ) : StorageDriver 
     override fun remove(key: String): Boolean {
         return try {
             val ruta = obtenerRutaArchivo(key)
-            // Equivalente a file.delete()
+
             fileSystem.delete(ruta)
             true
         } catch (e: IOException) {

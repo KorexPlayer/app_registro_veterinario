@@ -1,3 +1,5 @@
+package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.ui
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Archive
@@ -8,19 +10,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia.UsuarioActual
-import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.ui.PaginaResumen
-import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.ui.PaginaControl
-import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.ui.VeterinariosVisitados
-import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.ui.PaginaVacunas
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import kotlin.time.ExperimentalTime
 
-@kotlin.time.ExperimentalTime
+@ExperimentalTime
 @Composable
-@Preview
 fun MainPage(
     onCerrarSesion: () -> Unit
 ) {

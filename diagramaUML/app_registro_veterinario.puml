@@ -1,0 +1,610 @@
+@startuml
+
+' Estilos visuales
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam class {
+    BackgroundColor White
+    ArrowColor Black
+    BorderColor Black
+}
+
+' ---------------------------------------------------------
+' CAPA 1: MODELO DE DATOS (ENTIDADES)
+' ---------------------------------------------------------
+package "Dominio" {
+
+    'CLASE PADRE
+    abstract class Persona {
+        - id: int
+        - nombreCompleto: String
+        - telefono: String
+        - email: String
+        - direccion: String
+    }
+
+    ' Dueño hereda de Persona
+    class Dueno extends Persona {
+        - rut: String
+        - contrasena: String
+    }
+
+    ' Veterinario hereda de Persona
+    class Veterinario extends Persona {
+        ' Hereda los datos de contacto y nombre
+        ' Mantiene sus atributos exclusivos
+        - especialidad: String
+        - horarioAtencion: String
+        - descripcionServicio: String
+    }
+
+    ' Genero forma parte de animales
+    enum Genero {
+	+ MACHO
+	+ HEMBRA
+}
+
+
+    abstract class Mascota {
+        - id: int
+        - idDueno: int
+        - nombre: String
+        - edad: int
+        - fechaNacimiento: Instant
+        - genero: String
+        - especie: String
+        - raza: String
+        - peso: double
+
+        + {abstract}datosegundato(): String
+    }
+
+    class Perro extends Mascota{
+    - tipoHocico: String
+    + datosegundato(): String
+    }
+
+    class Gato extends Mascota {
+    - longitudBigotes: Float
+    + datosegundato(): String
+    }
+
+    class Conejo extends Mascota{
+    - tipoOrejas: String
+    + datosegundato(): String
+    }
+
+    class Hamster extends Mascota{
+    - capacidadAbazonesGramos: Float
+    + datosegundato(): String
+    }
+
+    class AveDomestica extends Mascota {
+    - formaPico: String
+    + datosegundato(): String
+    }
+
+    class RegistroVacuna {
+        - id: int
+        - idMascota: Int
+        - idVeterinario: Int
+        - nombreVacuna: String
+        - tipo: String
+        - cantidadDosis: int
+        - fechaVacunacion: Instant
+        - observaciones: String
+    }
+
+    class ControlVeterinario {
+        - id: int
+        - idMascota: Int
+        - idVeterinario: Int
+        - fechaConsulta: Instant
+        - motivoControl: String
+        - recomendaciones: String
+        - necesidadExamen: boolean
+        - cantidadExamen: int
+        - nombreExamenes: List<String>
+    }
+
+    class Tratamiento {
+        - id: int
+        - nombreTratamiento: String
+        - razonTratamiento: String
+        - nombreMedicamentos: List<String>
+        - dosisMedicamento: String
+        - frecuencia: String
+        - duracion: String
+        - observaciones: String
+    }
+
+    class Incidente {
+        - id: int
+        - idMascota: Int
+        - idVeterinario: Int
+        - nombre: String
+        - fecha: Instant
+        - tipoIncidente: String
+        - descripcion: String
+        - gravedad: String
+        - observaciones: String
+    }
+
+    ' Relaciones
+
+    ' Dueño tiene Mascotas
+    Dueno "1" o-- "1..*" Mascota : es propietario de >
+
+    ' Mascota tiene Historiales (Composición)
+    Mascota "1" *-- "0..*" RegistroVacuna
+    Mascota "1" *-- "0..*" ControlVeterinario
+    Mascota "1" *-- "0..*" Tratamiento
+    Mascota "1" *-- "0..*" Incidente
+
+    ' Registros vinculados a un Veterinario (Asociación)
+    RegistroVacuna --> Veterinario
+    ControlVeterinario --> Veterinario
+    Tratamiento --> Veterinario
+}
+
+' ---------------------------------------------------------
+' CAPA 2: PERSISTENCIA (DATOS)
+' ---------------------------------------------------------
+package "Capa de Datos (Persistence)" {
+
+    class GestorBaseDatos {
+        - driver: StorageDriver
+        + save(key: String, bytes: ByteArray): Boolean
+        + read(key: String): ByteArray?
+        + list(prefix: String): List<String>
+        + delete(key: String): Boolean
+    }
+
+    class UsuarioActual {
+        + {static} usuarioActual: Int?
+        + {static} nombreActual: String?
+    }
+   class AndroidDriverStorage extends StorageDriver{
+   - directorioBase: String
+   + obtenerRutaArchivo(key: String): Path
+   + put(key: String, data: ByteArray): Boolean
+   + get(key: String): ByteArray?
+   + keys(prefix: String): List<String>
+   + remove(Key: String): Boolean
+   }
+    interface StorageDriver {
+        fun put(key: String, data: ByteArray): Boolean
+        fun get(key: String): ByteArray?
+        fun keys(prefix: String): List<String>
+        fun remove(Key: String): Boolean
+    }
+    interface AnimalRepositorio {
+    fun crearMascota(m: Mascota): Mascota
+    fun actualizarMascota(m: Mascota): Mascota
+    fun eliminarMascota(id: Int): Boolean
+    fun listar(filtro: String = ""): List<Mascota>
+    }
+    interface DuenoRepositorio {
+    fun crearDueno (d: Dueno): Dueno
+    fun actualizarDueno (d: Dueno): Dueno
+    fun eliminarDueno (rut: String): Boolean
+    fun obtenerMascotasDueno(idDueno: Int): List<Mascota>
+    fun obtenerPorRut(rut: String): Dueno?
+    }
+    interface ObjetoVeterinarioRepositorio {
+    fun anadirControlVeterinario(c: ControlVeterinario): ControlVeterinario
+    fun anadirIncidente(i: Incidente): Incidente
+    fun anadirRegistroVacuna(i: RegistroVacuna): RegistroVacuna
+    fun anadirTratamiento(t: Tratamiento): Tratamiento
+    fun eliminarControlVeterinario(id: Int): Boolean
+    fun eliminarIncident(id: Int): Boolean
+    fun eliminarRegistroVeterinario(id: Int): Boolean
+    fun eliminarTratamiento(id: Int): Boolean
+    }
+    interface VeterinarioRepositorio {
+    fun crearVeterinario (v: Veterinario): Veterinario
+    fun actualizarVeterinario (v: Veterinario): Veterinario
+    fun eliminarVeterinario (id: Int): Boolean
+    fun obtenerPorId(id: Int): Veterinario?
+    fun listar(): List<Veterinario>
+    }
+    class RepositorioAnimal {
+        + repositorio : MutableList<Mascota>
+        - persistencia : GestorBaseDato?
+        - PREFIJO_KEY : String
+        - DELIMITADOR : String
+        + init(persistencia : GestorBaseDato)
+        - cargarDatos()
+        - mascotaATexto(m : Mascota) : String
+        - textoAMascota(data : String) : Mascota?
+        + crearMascota(m : Mascota) : Mascota
+        + actualizarMascota(m : Mascota) : Mascota
+        + eliminarMascota(id : Int) : Boolean
+        + listar(filtro : String) : List<Mascota>
+    }
+    class RepositorioDueno {
+        - animalRepo : AnimalRepositorio?
+        + repositorio : MutableList<Dueno>
+        - persistencia : GestorBaseDato?
+        - PREFIJO_KEY : String
+        - DELIMITADOR : String
+        + init(persistencia : GestorBaseDato, animalRepo : AnimalRepositorio)
+        - cargarDatos()
+        - duenoATexto(dueno : Dueno) : String
+        - textoADueno(data : String) : Dueno?
+        + crearDueno(d : Dueno) : Dueno
+        + actualizarDueno(d : Dueno) : Dueno
+        + eliminarDueno(rut : String) : Boolean
+        + obtenerMascotasDueno(idDueno : Int) : List<Mascota>
+        + obtenerPorRut(rut : String) : Dueno?
+        + autenticarUsuario(rut : String, password : String) : Dueno?
+    }
+    class RepositorioObjetoVeterinario {
+        + listaControles : MutableList<ControlVeterinario>
+        + listaIncidentes : MutableList<Incidente>
+        + listaVacunas : MutableList<RegistroVacuna>
+        + listaTratamientos : MutableList<Tratamiento>
+        - persistencia : GestorBaseDato?
+        - DELIMITADOR : String
+        - PREFIJO_CTRL : String
+        - PREFIJO_INC : String
+        - PREFIJO_VAC : String
+        - PREFIJO_TRAT : String
+        + init(persistencia : GestorBaseDato)
+        - cargarDatos()
+        - controlATexto(c : ControlVeterinario) : String
+        - textoAControl(data : String) : ControlVeterinario?
+        - incidenteATexto(i : Incidente) : String
+        - textoAIncidente(data : String) : Incidente?
+        - vacunaATexto(v : RegistroVacuna) : String
+        - textoAVacuna(data : String) : RegistroVacuna?
+        - tratamientoATexto(t : Tratamiento) : String
+        - textoATratamiento(data : String) : Tratamiento?
+        + anadirControlVeterinario(c : ControlVeterinario) : ControlVeterinario
+        + anadirIncidente(i : Incidente) : Incidente
+        + anadirRegistroVacuna(i : RegistroVacuna) : RegistroVacuna
+        + anadirTratamiento(t : Tratamiento) : Tratamiento
+        + eliminarControlVeterinario(id : Int) : Boolean
+        + eliminarIncident(id : Int) : Boolean
+        + eliminarRegistroVeterinario(id : Int) : Boolean
+        + eliminarTratamiento(id : Int) : Boolean
+    }
+    class RepositorioVeterinarios {
+        + repositorio : MutableList<Veterinario>
+        - persistencia : GestorBaseDato?
+        - {static} PREFIJO_KEY : String
+        - {static} DELIMITADOR : String
+        + init(persistencia : GestorBaseDato)
+        - cargarDatos()
+        - veterinarioATexto(veterinario : Veterinario) : String
+        - textoAVeterinario(data : String) : Veterinario?
+        + crearVeterinario(v : Veterinario) : Veterinario
+        + actualizarVeterinario(v : Veterinario) : Veterinario
+        + eliminarVeterinario(id : Int) : Boolean
+        + obtenerPorId(id : Int) : Veterinario?
+        + listar() : List<Veterinario>
+    }
+
+    RepositorioVeterinarios ..|> VeterinarioRepositorio
+    RepositorioObjetoVeterinario ..|> ObjetoVeterinarioRepositorio
+    RepositorioDueno ..|> DuenoRepositorio
+    GestorBaseDatos --> AndroidDriverStorage : usa
+    RepositorioAnimal ..|> AnimalRepositorio
+
+}
+
+' ---------------------------------------------------------
+' CAPA 3: INTERFAZ DE USUARIO (UI)
+' ---------------------------------------------------------
+package "Capa de UI (Vistas/Pantallas)" {
+    class LoginPage <<Composable>> {
+        + onLoginSuccess: () -> Unit
+        + onRegister: () -> Unit
+        - rut: String
+        - password: String
+        - error: String?
+    }
+    class MainPage <<Composable>> {
+        + onCerrarSesion : () -> Unit
+        - selectedItem : Int
+        - items : List<String>
+        - icons : List<ImageVector>
+    }
+    class PaginaControl <<Composable>> {
+        - pantallaActual : String
+        - mascotaSeleccionada : Int?
+    }
+
+    class PantallaListaControles <<Composable>> {
+        + mascotaSeleccionada : Int?
+        + onMascotaSeleccionada : (Int) -> Unit
+        + onAgregarControlClick : () -> Unit
+        - mascotas : List<Mascota>
+    }
+
+    class PantallaFormularioControl <<Composable>> {
+        + mascotaId : Int?
+        + onVolver : () -> Unit
+        - motivo : String
+        - recomendaciones : String
+        - fechaStr : String
+        - veterinarioStr : String
+        - necesidadExamen : Boolean
+        - cantidadExamen : String
+        - examenActual : String
+        - listaExamenes : List<String>
+        - mensaje : String
+    }
+
+    class DropdownMenuMascotas <<Composable>> {
+        + mascotas : List<Mascota>
+        + onSelect : (Int) -> Unit
+        - expanded : Boolean
+        - selectedLabel : String
+    }
+
+    enum Type {
+        AGREGAR
+        LISTADO
+    }
+
+    class PaginaResumen <<Composable>> {
+        - vistaActual : Type
+    }
+
+    class Listado <<Composable>> {
+        ' No tiene estado interno explícito con remember en el fragmento,
+        ' pero usa datos externos.
+    }
+
+    class AgregarMascota <<Composable>> {
+        + onCancelar : () -> Unit
+        + onRegistroExitoso : () -> Unit
+        - scrollState : ScrollState
+        - tipo : List<String>
+        - picos : List<String>
+        - tgenero : List<Genero>
+        - nombre : String
+        - edad : String
+        - fechaNacimiento : String
+        - raza : String
+        - peso : String
+        - especialstr : String
+        - especialnum : Double
+        - selectedtype : String
+        - selectedgenre : Genero
+        - selectedpeak : String
+        - error : String?
+    }
+
+    enum VistaVacuna {
+        AGREGAR
+        LISTADO
+    }
+
+    class PaginaVacunas <<Composable>> {
+        - vistaActual : VistaVacuna
+    }
+
+    class ListadoVacunas <<Composable>> {
+        - scrollState : ScrollState
+        - tiposAnimales : List<String>
+        - filtroTipo : String
+        - mascotasDisponibles : List<Mascota>
+        - mascotaSeleccionada : Mascota?
+    }
+
+    class AgregarVacuna <<Composable>> {
+        + onCancelar : () -> Unit
+        + onRegistroExitoso : () -> Unit
+        - scrollState : ScrollState
+        - tiposAnimales : List<String>
+        - tipoSeleccionado : String
+        - mascotasFiltradas : List<Mascota>
+        - selectedMascota : Mascota?
+        - listaVeterinarios : List<Veterinario>
+        - selectedVeterinario : Veterinario?
+        - nombreVacuna : String
+        - tipoVacuna : String
+        - cantidadDosis : String
+        - fechaVacunacion : String
+        - observaciones : String
+        - error : String?
+    }
+
+    enum TypeV {
+        AGREGAR
+        LISTADO
+    }
+
+    class VeterinariosVisitados <<Composable>> {
+        - vistaActual : TypeV
+    }
+
+    class AgregarVeterinario <<Composable>> {
+        + onRegresar : () -> Unit
+        - descServicio : String
+        - especialidad : String
+        - horarioAtencion : String
+        - nombre : String
+        - email : String
+        - direccion : String
+        - telefono : String
+        - error : String?
+        - scrollState : ScrollState
+    }
+
+    class RegisterPage <<Composable>> {
+        + onLogin : () -> Unit
+        - rut : String
+        - password : String
+        - password2 : String
+        - nombre : String
+        - email : String
+        - direccion : String
+        - telefono : String
+        - error : String?
+        - scrollState : ScrollState
+    }
+
+        class AppDropdown<T> <<Composable>> {
+            + label : String
+            + options : List<T>
+            + selectedOption : T
+            + onOptionSelected : (T) -> Unit
+            + itemLabel : (T) -> String
+            + modifier : Modifier
+            - expanded : Boolean
+        }
+
+        class CampoPasswordField <<Composable>> {
+            + label : String
+            + value : String
+            + onChange : (String) -> Unit
+            + modifier : Modifier
+            - mostrar : Boolean
+        }
+
+        class CampoTextField <<Composable>> {
+            + label : String
+            + value : String
+            + onChange : (String) -> Unit
+            + modifier1 : Modifier
+        }
+
+        class CardItem {
+            + title : String
+            + type : String
+            + status : String
+            + extraInfo : String
+        }
+
+        class ComprobarDato <<Utility>> {
+            + {static} invoke(dato: String, tipo: String) : Boolean
+        }
+
+    class ExpandableMediaCard <<Composable>> {
+        + item : CardItem
+        + onDeleteClick : () -> Unit
+        + icon : ImageVector
+        + tinte : Color
+        - expanded : Boolean
+    }
+
+    ' Relación de uso
+    ExpandableMediaCard ..> CardItem : visualiza datos
+    ' Dependencias de Datos
+    RegisterPage ..> RepositorioDueno : consulta y crea
+    RegisterPage ..> Dueno : crea instancia
+
+    ' Dependencias de UI y Utiles
+    RegisterPage ..> CampoTextField : usa
+    RegisterPage ..> CampoPasswordField : usa
+    RegisterPage ..> ComprobarDato : valida inputs
+    ' Relaciones de Navegación y Estado
+    VeterinariosVisitados ..> TypeV
+    VeterinariosVisitados ..> AgregarVeterinario : muestra
+
+    ' Dependencias de VeterinariosVisitados
+    VeterinariosVisitados ..> RepositorioVeterinarios : lee lista y elimina
+    VeterinariosVisitados ..> CardItem : crea
+    VeterinariosVisitados ..> ExpandableMediaCard : usa
+
+    ' Dependencias de AgregarVeterinario
+    AgregarVeterinario ..> CampoTextField : usa
+    AgregarVeterinario ..> RepositorioVeterinarios : verifica y crea
+    AgregarVeterinario ..> Veterinario : crea instancia
+    ' Asumo que ComprobarDato es una función utilitaria global
+    AgregarVeterinario ..> ComprobarDato : valida inputs
+    ' Relaciones de navegación
+    PaginaVacunas ..> VistaVacuna
+    PaginaVacunas ..> ListadoVacunas : muestra
+    PaginaVacunas ..> AgregarVacuna : muestra
+
+    ' Dependencias de ListadoVacunas
+    ListadoVacunas ..> RepositorioAnimal : filtra lista
+    ListadoVacunas ..> RepositorioObjetoVeterinario : lee lista y elimina
+    ListadoVacunas ..> RepositorioVeterinarios : busca por id
+    ListadoVacunas ..> AppDropdown : usa
+    ListadoVacunas ..> CardItem : crea
+    ListadoVacunas ..> ExpandableMediaCard : usa
+
+    ' Dependencias de AgregarVacuna
+    AgregarVacuna ..> RepositorioAnimal : lee lista
+    AgregarVacuna ..> RepositorioVeterinarios : lee lista
+    AgregarVacuna ..> RepositorioObjetoVeterinario : guarda registro
+    AgregarVacuna ..> RegistroVacuna : crea instancia
+    AgregarVacuna ..> AppDropdown : usa
+    AgregarVacuna ..> CampoTextField : usa
+
+    ' Verificaciones de tipo (is Perro, is Gato, etc)
+    ListadoVacunas ..> Perro
+    ListadoVacunas ..> Gato
+    ListadoVacunas ..> Conejo
+    ListadoVacunas ..> Hamster
+    ListadoVacunas ..> AveDomestica
+
+    AgregarVacuna ..> Perro
+    AgregarVacuna ..> Gato
+    AgregarVacuna ..> Conejo
+    AgregarVacuna ..> Hamster
+    AgregarVacuna ..> AveDomestica
+    ' Relaciones de navegación/composición
+    PaginaResumen ..> Type
+    PaginaResumen ..> Listado : muestra
+    PaginaResumen ..> AgregarMascota : muestra
+
+    ' Dependencias de Listado
+    Listado ..> UsuarioActual : lee nombre
+    Listado ..> RepositorioAnimal : lee lista y elimina
+    Listado ..> ExpandableMediaCard : usa
+    Listado ..> CardItem : crea
+
+    ' Dependencias de AgregarMascota
+    AgregarMascota ..> UsuarioActual : obtiene id
+    AgregarMascota ..> RepositorioAnimal : guarda mascota
+    AgregarMascota ..> CampoTextField : usa
+    AgregarMascota ..> AppDropdown : usa
+
+    ' Creación de instancias específicas en el formulario
+    AgregarMascota ..> AveDomestica : crea
+    AgregarMascota ..> Conejo : crea
+    AgregarMascota ..> Gato : crea
+    AgregarMascota ..> Hamster : crea
+    AgregarMascota ..> Perro : crea
+    ' Relaciones de navegación interna
+    PaginaControl ..> PantallaListaControles : "lista"
+    PaginaControl ..> PantallaFormularioControl : "formulario"
+
+    ' Dependencias de UI (Composición)
+    PantallaListaControles ..> DropdownMenuMascotas
+
+    ' Dependencias de Datos (Uso de Repositorios y Modelos)
+    PantallaListaControles ..> RepositorioAnimal : obtiene lista
+    PantallaListaControles ..> RepositorioVeterinarios : busca nombre
+
+    PantallaFormularioControl ..> RepositorioAnimal : obtiene mascota
+    PantallaFormularioControl ..> RepositorioVeterinarios : busca por nombre
+    ' Relaciones de navegación (basadas en el when)
+    MainPage ..> PaginaResumen : index 0
+    MainPage ..> PaginaControl : index 1
+    MainPage ..> VeterinariosVisitados : index 2
+    ' Index 3 es solo texto, no genera dependencia de clase
+    MainPage ..> PaginaVacunas : index 4
+
+
+    ' Relaciones de dependencia extraidas de la lógica del botón
+    LoginPage ..> RepositorioDueno : usa
+    LoginPage ..> UsuarioActual : usa
+
+    ' Relaciones con componentes visuales hijos (Composición)
+    LoginPage ..> CampoTextField
+    LoginPage ..> CampoPasswordField
+}
+
+package "Componentes" {
+
+
+}
+
+@enduml
