@@ -4,7 +4,7 @@ Este es un proyecto de Kotlin Multiplatform, en el que hemos creado una aplicaci
 para que las personas puedan llevar un historial de recetas medicas de sus mascotas ,
 entre otras cosas mas.
 ---
-![diagramaumlappveterinarias.png](./diagramacasifinal.svg)
+![diagramaumlappveterinarias.png](res/app_registro_veterinario.svg)
 ## Registro Veterinario
 
 ### Requisitos Tecnicos de la aplicacion
