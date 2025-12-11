@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.persistencia.UsuarioActual
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.ui.PaginaResumen
+import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.ui.PaginaControl
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.ui.VeterinariosVisitados
 import com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.ui.PaginaVacunas
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -69,7 +70,7 @@ fun MainPage(
             ) {
                 when (selectedItem) {
                     0 -> PaginaResumen()
-                    1 -> Text("Controles Veterinarios")
+                    1 -> PaginaControl()
                     2 -> VeterinariosVisitados()
                     3 -> Text("Historial Médico")
                     4 -> PaginaVacunas()
