@@ -309,7 +309,7 @@ object RepositorioObjetoVeterinario : ObjetoVeterinarioRepositorio {
         return false
     }
 
-    override fun eliminarIncident(id: Int): Boolean {
+    override fun eliminarIncidente(id: Int): Boolean {
         for (item in listaIncidentes) {
             if (item.getId() == id) {
                 listaIncidentes.remove(item)

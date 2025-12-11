@@ -13,7 +13,7 @@ interface ObjetoVeterinarioRepositorio {
     fun anadirTratamiento(t: Tratamiento): Tratamiento
 
     fun eliminarControlVeterinario(id: Int): Boolean
-    fun eliminarIncident(id: Int): Boolean
+    fun eliminarIncidente(id: Int): Boolean
     fun eliminarRegistroVeterinario(id: Int): Boolean
     fun eliminarTratamiento(id: Int): Boolean
 

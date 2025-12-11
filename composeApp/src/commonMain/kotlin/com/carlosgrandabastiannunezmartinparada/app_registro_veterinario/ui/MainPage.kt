@@ -2,10 +2,12 @@ package com.carlosgrandabastiannunezmartinparada.app_registro_veterinario.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Archive
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Vaccines
+import androidx.compose.material.icons.filled.Report
+import androidx.compose.material.icons.filled.MedicalServices
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,8 +22,8 @@ fun MainPage(
     onCerrarSesion: () -> Unit
 ) {
     var selectedItem by remember { mutableStateOf(0) }
-    val items = listOf("Principal", "Controles", "Medico Vet.", "Historial", "Vacunas")
-    val icons = listOf(Icons.Default.Home, Icons.Default.List, Icons.Default.Person, Icons.Default.List, Icons.Default.Archive)
+    val items = listOf("Principal", "Control", "Receta", "Vacunas", "Incidente", "Medico Vet.")
+    val icons = listOf(Icons.Default.Home, Icons.Default.List, Icons.Default.MedicalServices, Icons.Default.Vaccines, Icons.Default.Report, Icons.Default.Person)
 
     Scaffold(
         bottomBar = {
@@ -66,9 +68,10 @@ fun MainPage(
                 when (selectedItem) {
                     0 -> PaginaResumen()
                     1 -> PaginaControl()
-                    2 -> VeterinariosVisitados()
-                    3 -> Text("Historial Médico")
-                    4 -> PaginaVacunas()
+                    2 -> PaginaTratamientos()
+                    3 -> PaginaVacunas()
+                    4 -> PaginaIncidentes()
+                    5 -> VeterinariosVisitados()
                 }
             }
         }
