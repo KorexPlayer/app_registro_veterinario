@@ -1,0 +1,146 @@
+@startuml
+
+package "Capa de Datos (Persistence)" {
+
+    class GestorBaseDatos {
+        - driver: StorageDriver
+        + save(key: String, bytes: ByteArray): Boolean
+        + read(key: String): ByteArray?
+        + list(prefix: String): List<String>
+        + delete(key: String): Boolean
+    }
+
+    class UsuarioActual {
+        + {static} usuarioActual: Int?
+        + {static} nombreActual: String?
+    }
+   class AndroidDriverStorage extends StorageDriver{
+   - directorioBase: String
+   + obtenerRutaArchivo(key: String): Path
+   + put(key: String, data: ByteArray): Boolean
+   + get(key: String): ByteArray?
+   + keys(prefix: String): List<String>
+   + remove(Key: String): Boolean
+   }
+    interface StorageDriver {
+        fun put(key: String, data: ByteArray): Boolean
+        fun get(key: String): ByteArray?
+        fun keys(prefix: String): List<String>
+        fun remove(Key: String): Boolean
+    }
+    interface AnimalRepositorio {
+    fun crearMascota(m: Mascota): Mascota
+    fun actualizarMascota(m: Mascota): Mascota
+    fun eliminarMascota(id: Int): Boolean
+    fun listar(filtro: String = ""): List<Mascota>
+    }
+    interface DuenoRepositorio {
+    fun crearDueno (d: Dueno): Dueno
+    fun actualizarDueno (d: Dueno): Dueno
+    fun eliminarDueno (rut: String): Boolean
+    fun obtenerMascotasDueno(idDueno: Int): List<Mascota>
+    fun obtenerPorRut(rut: String): Dueno?
+    }
+    interface ObjetoVeterinarioRepositorio {
+    fun anadirControlVeterinario(c: ControlVeterinario): ControlVeterinario
+    fun anadirIncidente(i: Incidente): Incidente
+    fun anadirRegistroVacuna(i: RegistroVacuna): RegistroVacuna
+    fun anadirTratamiento(t: Tratamiento): Tratamiento
+    fun eliminarControlVeterinario(id: Int): Boolean
+    fun eliminarIncident(id: Int): Boolean
+    fun eliminarRegistroVeterinario(id: Int): Boolean
+    fun eliminarTratamiento(id: Int): Boolean
+    }
+    interface VeterinarioRepositorio {
+    fun crearVeterinario (v: Veterinario): Veterinario
+    fun actualizarVeterinario (v: Veterinario): Veterinario
+    fun eliminarVeterinario (id: Int): Boolean
+    fun obtenerPorId(id: Int): Veterinario?
+    fun listar(): List<Veterinario>
+    }
+    class RepositorioAnimal {
+        + repositorio : MutableList<Mascota>
+        - persistencia : GestorBaseDato?
+        - PREFIJO_KEY : String
+        - DELIMITADOR : String
+        + init(persistencia : GestorBaseDato)
+        - cargarDatos()
+        - mascotaATexto(m : Mascota) : String
+        - textoAMascota(data : String) : Mascota?
+        + crearMascota(m : Mascota) : Mascota
+        + actualizarMascota(m : Mascota) : Mascota
+        + eliminarMascota(id : Int) : Boolean
+        + listar(filtro : String) : List<Mascota>
+    }
+    class RepositorioDueno {
+        - animalRepo : AnimalRepositorio?
+        + repositorio : MutableList<Dueno>
+        - persistencia : GestorBaseDato?
+        - PREFIJO_KEY : String
+        - DELIMITADOR : String
+        + init(persistencia : GestorBaseDato, animalRepo : AnimalRepositorio)
+        - cargarDatos()
+        - duenoATexto(dueno : Dueno) : String
+        - textoADueno(data : String) : Dueno?
+        + crearDueno(d : Dueno) : Dueno
+        + actualizarDueno(d : Dueno) : Dueno
+        + eliminarDueno(rut : String) : Boolean
+        + obtenerMascotasDueno(idDueno : Int) : List<Mascota>
+        + obtenerPorRut(rut : String) : Dueno?
+        + autenticarUsuario(rut : String, password : String) : Dueno?
+    }
+    class RepositorioObjetoVeterinario {
+        + listaControles : MutableList<ControlVeterinario>
+        + listaIncidentes : MutableList<Incidente>
+        + listaVacunas : MutableList<RegistroVacuna>
+        + listaTratamientos : MutableList<Tratamiento>
+        - persistencia : GestorBaseDato?
+        - DELIMITADOR : String
+        - PREFIJO_CTRL : String
+        - PREFIJO_INC : String
+        - PREFIJO_VAC : String
+        - PREFIJO_TRAT : String
+        + init(persistencia : GestorBaseDato)
+        - cargarDatos()
+        - controlATexto(c : ControlVeterinario) : String
+        - textoAControl(data : String) : ControlVeterinario?
+        - incidenteATexto(i : Incidente) : String
+        - textoAIncidente(data : String) : Incidente?
+        - vacunaATexto(v : RegistroVacuna) : String
+        - textoAVacuna(data : String) : RegistroVacuna?
+        - tratamientoATexto(t : Tratamiento) : String
+        - textoATratamiento(data : String) : Tratamiento?
+        + anadirControlVeterinario(c : ControlVeterinario) : ControlVeterinario
+        + anadirIncidente(i : Incidente) : Incidente
+        + anadirRegistroVacuna(i : RegistroVacuna) : RegistroVacuna
+        + anadirTratamiento(t : Tratamiento) : Tratamiento
+        + eliminarControlVeterinario(id : Int) : Boolean
+        + eliminarIncident(id : Int) : Boolean
+        + eliminarRegistroVeterinario(id : Int) : Boolean
+        + eliminarTratamiento(id : Int) : Boolean
+    }
+    class RepositorioVeterinarios {
+        + repositorio : MutableList<Veterinario>
+        - persistencia : GestorBaseDato?
+        - {static} PREFIJO_KEY : String
+        - {static} DELIMITADOR : String
+        + init(persistencia : GestorBaseDato)
+        - cargarDatos()
+        - veterinarioATexto(veterinario : Veterinario) : String
+        - textoAVeterinario(data : String) : Veterinario?
+        + crearVeterinario(v : Veterinario) : Veterinario
+        + actualizarVeterinario(v : Veterinario) : Veterinario
+        + eliminarVeterinario(id : Int) : Boolean
+        + obtenerPorId(id : Int) : Veterinario?
+        + listar() : List<Veterinario>
+    }
+
+    RepositorioVeterinarios ..|> VeterinarioRepositorio
+    RepositorioObjetoVeterinario ..|> ObjetoVeterinarioRepositorio
+    RepositorioDueno ..|> DuenoRepositorio
+    GestorBaseDatos --> AndroidDriverStorage : usa
+    RepositorioAnimal ..|> AnimalRepositorio
+
+}
+
+@enduml

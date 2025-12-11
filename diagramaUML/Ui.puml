@@ -1,0 +1,273 @@
+@startuml
+package "Capa de UI (Vistas/Pantallas)" {
+    class LoginPage <<Composable>> {
+        + onLoginSuccess: () -> Unit
+        + onRegister: () -> Unit
+        - rut: String
+        - password: String
+        - error: String?
+    }
+    class MainPage <<Composable>> {
+        + onCerrarSesion : () -> Unit
+        - selectedItem : Int
+        - items : List<String>
+        - icons : List<ImageVector>
+    }
+    class PaginaControl <<Composable>> {
+        - pantallaActual : String
+        - mascotaSeleccionada : Int?
+    }
+
+    class PantallaListaControles <<Composable>> {
+        + mascotaSeleccionada : Int?
+        + onMascotaSeleccionada : (Int) -> Unit
+        + onAgregarControlClick : () -> Unit
+        - mascotas : List<Mascota>
+    }
+
+    class PantallaFormularioControl <<Composable>> {
+        + mascotaId : Int?
+        + onVolver : () -> Unit
+        - motivo : String
+        - recomendaciones : String
+        - fechaStr : String
+        - veterinarioStr : String
+        - necesidadExamen : Boolean
+        - cantidadExamen : String
+        - examenActual : String
+        - listaExamenes : List<String>
+        - mensaje : String
+    }
+
+    class DropdownMenuMascotas <<Composable>> {
+        + mascotas : List<Mascota>
+        + onSelect : (Int) -> Unit
+        - expanded : Boolean
+        - selectedLabel : String
+    }
+
+    enum Type {
+        AGREGAR
+        LISTADO
+    }
+
+    class PaginaResumen <<Composable>> {
+        - vistaActual : Type
+    }
+
+    class Listado <<Composable>> {
+        ' No tiene estado interno explícito con remember en el fragmento,
+        ' pero usa datos externos.
+    }
+
+    class AgregarMascota <<Composable>> {
+        + onCancelar : () -> Unit
+        + onRegistroExitoso : () -> Unit
+        - scrollState : ScrollState
+        - tipo : List<String>
+        - picos : List<String>
+        - tgenero : List<Genero>
+        - nombre : String
+        - edad : String
+        - fechaNacimiento : String
+        - raza : String
+        - peso : String
+        - especialstr : String
+        - especialnum : Double
+        - selectedtype : String
+        - selectedgenre : Genero
+        - selectedpeak : String
+        - error : String?
+    }
+
+    enum VistaVacuna {
+        AGREGAR
+        LISTADO
+    }
+
+    class PaginaVacunas <<Composable>> {
+        - vistaActual : VistaVacuna
+    }
+
+    class ListadoVacunas <<Composable>> {
+        - scrollState : ScrollState
+        - tiposAnimales : List<String>
+        - filtroTipo : String
+        - mascotasDisponibles : List<Mascota>
+        - mascotaSeleccionada : Mascota?
+    }
+
+    class AgregarVacuna <<Composable>> {
+        + onCancelar : () -> Unit
+        + onRegistroExitoso : () -> Unit
+        - scrollState : ScrollState
+        - tiposAnimales : List<String>
+        - tipoSeleccionado : String
+        - mascotasFiltradas : List<Mascota>
+        - selectedMascota : Mascota?
+        - listaVeterinarios : List<Veterinario>
+        - selectedVeterinario : Veterinario?
+        - nombreVacuna : String
+        - tipoVacuna : String
+        - cantidadDosis : String
+        - fechaVacunacion : String
+        - observaciones : String
+        - error : String?
+    }
+
+    enum TypeV {
+        AGREGAR
+        LISTADO
+    }
+
+    class VeterinariosVisitados <<Composable>> {
+        - vistaActual : TypeV
+    }
+
+    class AgregarVeterinario <<Composable>> {
+        + onRegresar : () -> Unit
+        - descServicio : String
+        - especialidad : String
+        - horarioAtencion : String
+        - nombre : String
+        - email : String
+        - direccion : String
+        - telefono : String
+        - error : String?
+        - scrollState : ScrollState
+    }
+
+    class RegisterPage <<Composable>> {
+        + onLogin : () -> Unit
+        - rut : String
+        - password : String
+        - password2 : String
+        - nombre : String
+        - email : String
+        - direccion : String
+        - telefono : String
+        - error : String?
+        - scrollState : ScrollState
+    }
+
+        class AppDropdown<T> <<Composable>> {
+            + label : String
+            + options : List<T>
+            + selectedOption : T
+            + onOptionSelected : (T) -> Unit
+            + itemLabel : (T) -> String
+            + modifier : Modifier
+            - expanded : Boolean
+        }
+
+        class CampoPasswordField <<Composable>> {
+            + label : String
+            + value : String
+            + onChange : (String) -> Unit
+            + modifier : Modifier
+            - mostrar : Boolean
+        }
+
+        class CampoTextField <<Composable>> {
+            + label : String
+            + value : String
+            + onChange : (String) -> Unit
+            + modifier1 : Modifier
+        }
+
+        class CardItem {
+            + title : String
+            + type : String
+            + status : String
+            + extraInfo : String
+        }
+
+        class ComprobarDato <<Utility>> {
+            + {static} invoke(dato: String, tipo: String) : Boolean
+        }
+
+    class ExpandableMediaCard <<Composable>> {
+        + item : CardItem
+        + onDeleteClick : () -> Unit
+        + icon : ImageVector
+        + tinte : Color
+        - expanded : Boolean
+    }
+
+
+    enum VistaIncidente {
+        AGREGAR
+        LISTADO
+    }
+
+    class PaginaIncidentes <<Composable>> {
+        - vistaActual : VistaIncidente
+    }
+
+    class ListadoIncidentes <<Composable>> {
+        - scrollState : ScrollState
+        - tiposAnimales : List<String>
+        - filtroTipo : String
+        - mascotasDisponibles : List<Mascota>
+        - mascotaSeleccionada : Mascota?
+    }
+
+    class AgregarIncidente <<Composable>> {
+        + onCancelar : () -> Unit
+        + onRegistroExitoso : () -> Unit
+        - scrollState : ScrollState
+        - tiposAnimales : List<String>
+        - tipoSeleccionado : String
+        - mascotasFiltradas : List<Mascota>
+        - selectedMascota : Mascota?
+        - listaVeterinarios : List<Veterinario>
+        - selectedVeterinario : Veterinario?
+        - gravedades : List<String>
+        - gravedadSeleccionada : String
+        - nombreIncidente : String
+        - fechaIncidente : String
+        - tipoIncidente : String
+        - descripcion : String
+        - observaciones : String
+        - error : String?
+    }
+
+    enum VistaTratamiento {
+        AGREGAR
+        LISTADO
+    }
+
+    class PaginaTratamientos <<Composable>> {
+        - vistaActual : VistaTratamiento
+    }
+
+    class ListadoTratamientos <<Composable>> {
+        - scrollState : ScrollState
+        - tiposAnimales : List<String>
+        - filtroTipo : String
+        - mascotasDisponibles : List<Mascota>
+        - mascotaSeleccionada : Mascota?
+    }
+
+    class AgregarTratamiento <<Composable>> {
+        + onCancelar : () -> Unit
+        + onRegistroExitoso : () -> Unit
+        - scrollState : ScrollState
+        - tiposAnimales : List<String>
+        - tipoSeleccionado : String
+        - mascotasFiltradas : List<Mascota>
+        - selectedMascota : Mascota?
+        - listaVeterinarios : List<Veterinario>
+        - selectedVeterinario : Veterinario?
+        - nombreTratamiento : String
+        - razonTratamiento : String
+        - observaciones : String
+        - medNombre : String
+        - medDosis : String
+        - medFrecuencia : String
+        - medDuracion : String
+        - listaMedicamentos : List<String>
+        - error : String?
+    }
+}
+@enduml

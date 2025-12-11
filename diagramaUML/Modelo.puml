@@ -1,0 +1,120 @@
+@startuml
+package "Dominio" {
+
+    'CLASE PADRE
+    abstract class Persona {
+        - id: int
+        - nombreCompleto: String
+        - telefono: String
+        - email: String
+        - direccion: String
+    }
+
+    ' Dueño hereda de Persona
+    class Dueno extends Persona {
+        - rut: String
+        - contrasena: String
+    }
+
+    ' Veterinario hereda de Persona
+    class Veterinario extends Persona {
+        ' Hereda los datos de contacto y nombre
+        ' Mantiene sus atributos exclusivos
+        - especialidad: String
+        - horarioAtencion: String
+        - descripcionServicio: String
+    }
+
+    ' Genero forma parte de animales
+    enum Genero {
+	+ MACHO
+	+ HEMBRA
+}
+
+
+    abstract class Mascota {
+        - id: int
+        - idDueno: int
+        - nombre: String
+        - edad: int
+        - fechaNacimiento: Instant
+        - genero: String
+        - especie: String
+        - raza: String
+        - peso: double
+
+        + {abstract}datosegundato(): String
+    }
+
+    class Perro extends Mascota{
+    - tipoHocico: String
+    + datosegundato(): String
+    }
+
+    class Gato extends Mascota {
+    - longitudBigotes: Float
+    + datosegundato(): String
+    }
+
+    class Conejo extends Mascota{
+    - tipoOrejas: String
+    + datosegundato(): String
+    }
+
+    class Hamster extends Mascota{
+    - capacidadAbazonesGramos: Float
+    + datosegundato(): String
+    }
+
+    class AveDomestica extends Mascota {
+    - formaPico: String
+    + datosegundato(): String
+    }
+
+    class RegistroVacuna {
+        - id: int
+        - idMascota: Int
+        - idVeterinario: Int
+        - nombreVacuna: String
+        - tipo: String
+        - cantidadDosis: int
+        - fechaVacunacion: Instant
+        - observaciones: String
+    }
+
+    class ControlVeterinario {
+        - id: int
+        - idMascota: Int
+        - idVeterinario: Int
+        - fechaConsulta: Instant
+        - motivoControl: String
+        - recomendaciones: String
+        - necesidadExamen: boolean
+        - cantidadExamen: int
+        - nombreExamenes: List<String>
+    }
+
+    class Tratamiento {
+        - id: int
+        - nombreTratamiento: String
+        - razonTratamiento: String
+        - nombreMedicamentos: List<String>
+        - dosisMedicamento: String
+        - frecuencia: String
+        - duracion: String
+        - observaciones: String
+    }
+
+    class Incidente {
+        - id: int
+        - idMascota: Int
+        - idVeterinario: Int
+        - nombre: String
+        - fecha: Instant
+        - tipoIncidente: String
+        - descripcion: String
+        - gravedad: String
+        - observaciones: String
+    }
+}
+@enduml

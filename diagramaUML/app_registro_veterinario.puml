@@ -491,6 +491,148 @@ package "Capa de UI (Vistas/Pantallas)" {
         - expanded : Boolean
     }
 
+
+    enum VistaIncidente {
+        AGREGAR
+        LISTADO
+    }
+
+    class PaginaIncidentes <<Composable>> {
+        - vistaActual : VistaIncidente
+    }
+
+    class ListadoIncidentes <<Composable>> {
+        - scrollState : ScrollState
+        - tiposAnimales : List<String>
+        - filtroTipo : String
+        - mascotasDisponibles : List<Mascota>
+        - mascotaSeleccionada : Mascota?
+    }
+
+    class AgregarIncidente <<Composable>> {
+        + onCancelar : () -> Unit
+        + onRegistroExitoso : () -> Unit
+        - scrollState : ScrollState
+        - tiposAnimales : List<String>
+        - tipoSeleccionado : String
+        - mascotasFiltradas : List<Mascota>
+        - selectedMascota : Mascota?
+        - listaVeterinarios : List<Veterinario>
+        - selectedVeterinario : Veterinario?
+        - gravedades : List<String>
+        - gravedadSeleccionada : String
+        - nombreIncidente : String
+        - fechaIncidente : String
+        - tipoIncidente : String
+        - descripcion : String
+        - observaciones : String
+        - error : String?
+    }
+
+    enum VistaTratamiento {
+        AGREGAR
+        LISTADO
+    }
+
+    class PaginaTratamientos <<Composable>> {
+        - vistaActual : VistaTratamiento
+    }
+
+    class ListadoTratamientos <<Composable>> {
+        - scrollState : ScrollState
+        - tiposAnimales : List<String>
+        - filtroTipo : String
+        - mascotasDisponibles : List<Mascota>
+        - mascotaSeleccionada : Mascota?
+    }
+
+    class AgregarTratamiento <<Composable>> {
+        + onCancelar : () -> Unit
+        + onRegistroExitoso : () -> Unit
+        - scrollState : ScrollState
+        - tiposAnimales : List<String>
+        - tipoSeleccionado : String
+        - mascotasFiltradas : List<Mascota>
+        - selectedMascota : Mascota?
+        - listaVeterinarios : List<Veterinario>
+        - selectedVeterinario : Veterinario?
+        - nombreTratamiento : String
+        - razonTratamiento : String
+        - observaciones : String
+        - medNombre : String
+        - medDosis : String
+        - medFrecuencia : String
+        - medDuracion : String
+        - listaMedicamentos : List<String>
+        - error : String?
+    }
+
+    ' Relaciones de navegación
+    PaginaTratamientos ..> VistaTratamiento
+    PaginaTratamientos ..> ListadoTratamientos : muestra
+    PaginaTratamientos ..> AgregarTratamiento : muestra
+
+    ' Dependencias de ListadoTratamientos
+    ListadoTratamientos ..> RepositorioAnimal : filtra lista
+    ListadoTratamientos ..> RepositorioObjetoVeterinario : lee lista y elimina
+    ListadoTratamientos ..> RepositorioVeterinarios : busca por id
+    ListadoTratamientos ..> AppDropdown : usa
+    ListadoTratamientos ..> CardItem : crea
+    ListadoTratamientos ..> ExpandableMediaCard : usa
+    ListadoTratamientos ..> Mascota : selecciona
+
+    ' Dependencias de AgregarTratamiento
+    AgregarTratamiento ..> RepositorioAnimal : lee lista
+    AgregarTratamiento ..> RepositorioVeterinarios : lee lista
+    AgregarTratamiento ..> AppDropdown : usa
+    AgregarTratamiento ..> CampoTextField : usa
+    AgregarTratamiento ..> Mascota : llama a agregarTratamiento()
+
+    ' Verificaciones de tipo
+    ListadoTratamientos ..> Perro
+    ListadoTratamientos ..> Gato
+    ListadoTratamientos ..> Conejo
+    ListadoTratamientos ..> Hamster
+    ListadoTratamientos ..> AveDomestica
+
+    AgregarTratamiento ..> Perro
+    AgregarTratamiento ..> Gato
+    AgregarTratamiento ..> Conejo
+    AgregarTratamiento ..> Hamster
+    AgregarTratamiento ..> AveDomestica
+    ' Relaciones de navegación
+    PaginaIncidentes ..> VistaIncidente
+    PaginaIncidentes ..> ListadoIncidentes : muestra
+    PaginaIncidentes ..> AgregarIncidente : muestra
+
+    ' Dependencias de ListadoIncidentes
+    ListadoIncidentes ..> RepositorioAnimal : filtra lista
+    ListadoIncidentes ..> RepositorioObjetoVeterinario : lee lista y elimina
+    ListadoIncidentes ..> RepositorioVeterinarios : busca por id
+    ListadoIncidentes ..> AppDropdown : usa
+    ListadoIncidentes ..> CardItem : crea
+    ListadoIncidentes ..> ExpandableMediaCard : usa
+    ListadoIncidentes ..> Mascota : selecciona
+
+    ' Dependencias de AgregarIncidente
+    AgregarIncidente ..> RepositorioAnimal : lee lista
+    AgregarIncidente ..> RepositorioVeterinarios : lee lista
+    AgregarIncidente ..> AppDropdown : usa
+    AgregarIncidente ..> CampoTextField : usa
+    AgregarIncidente ..> Mascota : llama a agregarIncidente()
+
+    ' Verificaciones de tipo (is Perro, is Gato, etc)
+    ListadoIncidentes ..> Perro
+    ListadoIncidentes ..> Gato
+    ListadoIncidentes ..> Conejo
+    ListadoIncidentes ..> Hamster
+    ListadoIncidentes ..> AveDomestica
+
+    AgregarIncidente ..> Perro
+    AgregarIncidente ..> Gato
+    AgregarIncidente ..> Conejo
+    AgregarIncidente ..> Hamster
+    AgregarIncidente ..> AveDomestica
     ' Relación de uso
     ExpandableMediaCard ..> CardItem : visualiza datos
     ' Dependencias de Datos
@@ -588,9 +730,10 @@ package "Capa de UI (Vistas/Pantallas)" {
     ' Relaciones de navegación (basadas en el when)
     MainPage ..> PaginaResumen : index 0
     MainPage ..> PaginaControl : index 1
-    MainPage ..> VeterinariosVisitados : index 2
-    ' Index 3 es solo texto, no genera dependencia de clase
-    MainPage ..> PaginaVacunas : index 4
+    MainPage ..> PaginaTratamientos : index 2
+    MainPage ..> PaginaVacunas : index 3
+    MainPage ..> PaginaIncidentes : index 4
+    MainPage ..> VeterinariosVisitados : index 5
 
 
     ' Relaciones de dependencia extraidas de la lógica del botón
@@ -601,10 +744,4 @@ package "Capa de UI (Vistas/Pantallas)" {
     LoginPage ..> CampoTextField
     LoginPage ..> CampoPasswordField
 }
-
-package "Componentes" {
-
-
-}
-
 @enduml
