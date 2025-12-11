@@ -102,7 +102,7 @@ private fun Listado() {
             "Genero: ${
                 (mascota.getGenero()).toString()
                     .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
-            }, Edad: ${mascota.getEdad()} y el peso es de: ${mascota.getPeso()}" + ".\nDato de tu mascota: ${mascota.datosegundato()}"
+            }, Edad: ${mascota.getEdad()} años y el peso es de: ${mascota.getPeso()} kg" + ".\nDato de tu mascota: ${mascota.datosegundato()}"
         )
         ExpandableMediaCard(item = sample, onDeleteClick = { RepositorioAnimal.eliminarMascota(mascota.getId()) }, icon = Icons.Default.Delete, tinte = Color.Red)
     }
@@ -150,19 +150,15 @@ private fun AgregarMascota(onCancelar: () -> Unit, onRegistroExitoso: () -> Unit
                 especialstr = selectedpeak
             }
             "Conejo" -> {
-                especialstr = ""
                 CampoTextField("Tipo de Oreja (Largo/Corta)", especialstr, onChange = { especialstr = it })
             }
             "Gato" -> {
-                especialstr = ""
                 CampoTextField("Longitud de Bigotes (En cm: 10)", especialstr, onChange = { especialstr = it })
             }
             "Hamster" -> {
-                especialstr = ""
                 CampoTextField("Capacidad Abazones (En grs: 200)", especialstr, onChange = { especialstr = it })
             }
             "Perro" -> {
-                especialstr = ""
                 CampoTextField("Tipo de Hocico (Largo/Mediano/Corto)", especialstr, onChange = { especialstr = it })
             }
         }

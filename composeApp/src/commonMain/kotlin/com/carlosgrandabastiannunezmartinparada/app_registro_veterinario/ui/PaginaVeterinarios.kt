@@ -43,7 +43,7 @@ fun VeterinariosVisitados() {
     ) {
 
         Text("Contactos de los Veterinarios", style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(5.dp))
-        if (RepositorioVeterinarios.listar().isEmpty()) Text("No se encuentra nadie agregue a algun veterinario/a.", color = MaterialTheme.colorScheme.error, fontSize = 12.sp)
+        if (RepositorioVeterinarios.listar().isEmpty()) Text("No se encuentra nadie agregue a algun veterinario/a.", color = Color.Gray)
         if (vistaActual == TypeV.AGREGAR) {
             AgregarVeterinario(
                 onRegresar = { vistaActual = TypeV.LISTADO }
