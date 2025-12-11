@@ -150,15 +150,19 @@ private fun AgregarMascota(onCancelar: () -> Unit, onRegistroExitoso: () -> Unit
                 especialstr = selectedpeak
             }
             "Conejo" -> {
+                especialstr = ""
                 CampoTextField("Tipo de Oreja (Largo/Corta)", especialstr, onChange = { especialstr = it })
             }
             "Gato" -> {
+                especialstr = ""
                 CampoTextField("Longitud de Bigotes (En cm: 10)", especialstr, onChange = { especialstr = it })
             }
             "Hamster" -> {
+                especialstr = ""
                 CampoTextField("Capacidad Abazones (En grs: 200)", especialstr, onChange = { especialstr = it })
             }
             "Perro" -> {
+                especialstr = ""
                 CampoTextField("Tipo de Hocico (Largo/Mediano/Corto)", especialstr, onChange = { especialstr = it })
             }
         }
